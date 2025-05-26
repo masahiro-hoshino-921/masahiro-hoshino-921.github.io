@@ -9,6 +9,7 @@
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/navigation.js" defer></script>
+    <script src="js/publications.js" defer></script>
 </head>
 
 <body>
@@ -80,7 +81,7 @@
                     <div class="section-content scroll-box">
                         <div class="news-item">
                             <div class="news-date" data-en="2025-5-26" data-ja="2025年5月26日">2025-5-26</div>
-                            <div class="news-text" data-en="I created this website." data-ja="ウェブサイトを作成しました。">I created this website.</div>
+                            <div class="news-text" data-en="Claude and I created this website." data-ja="ウェブサイトを作成しました。">Claude and I created this website.</div>
                         </div>
                     </div>
                 </div>
@@ -95,7 +96,7 @@
                                 <div class="contact-item">
                                     <h3 class="contact-label" data-en="Email" data-ja="メール">Email</h3>
                                     <div class="contact-value">
-                                        <a href="mailto:hoshino-masahiro921@g.ecc.u-tokyo.ac.jp">hoshino-masahiro921@g.ecc.u-tokyo.ac.jp</a>
+                                        hoshino-masahiro921[at]g.ecc.u-tokyo.ac.jp
                                     </div>
                                 </div>
                                 <div class="contact-item">
@@ -147,10 +148,8 @@
                         <h2 class="section-title" data-en="Publications" data-ja="研究業績">Publications</h2>
                     </div>
                     <div class="section-content">
-                        <div class="placeholder-content">
-                            <h2 data-en="Publications" data-ja="研究業績">Publications</h2>
-                            <p data-en="Your published papers, articles, and research contributions will be listed here." data-ja="あなたの論文、記事、研究成果がここに表示されます。">Your published papers, articles, and research contributions will be listed here.</p>
-                            <p data-en="Include journal articles, conference proceedings, book chapters, and other scholarly works." data-ja="学術論文、学会発表論文、書籍の章、その他の学術的な業績を含みます。">Include journal articles, conference proceedings, book chapters, and other scholarly works.</p>
+                        <div id="publications-list" class="publications-container">
+                            <!-- Publications will be dynamically generated here -->
                         </div>
                     </div>
                 </div>

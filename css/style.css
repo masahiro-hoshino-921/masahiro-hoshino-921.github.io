@@ -312,6 +312,122 @@ main {
     gap: 20px;
 }
 
+/* Publications Styles */
+.publications-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.publication-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #FFEFED;
+    transition: all 0.3s ease;
+}
+
+.publication-item:last-child {
+    border-bottom: none;
+}
+
+.publication-item:hover {
+    background-color: #FFF8F7;
+    margin: 0 -1.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transform: translateX(5px);
+}
+
+.publication-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 0.3rem;
+    opacity: 0.6;
+}
+
+.publication-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.publication-main {
+    line-height: 1.6;
+}
+
+.publication-authors {
+    color: #333;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.publication-year {
+    color: #666;
+    font-weight: 400;
+    margin-right: 0.5rem;
+}
+
+.publication-title {
+    color: #E9545D;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.publication-title:hover {
+    color: #D63384;
+    /* text-decoration: underline; */
+}
+
+.publication-journal {
+    color: #333;
+    font-weight: 400;
+}
+
+.publication-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+}
+
+.pub-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid #E9545D;
+    border-radius: 20px;
+    color: #E9545D;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.pub-btn:hover {
+    background-color: #E9545D;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(233, 84, 93, 0.3);
+}
+
+.pub-btn.video-btn {
+    border-color: #17a2b8;
+    color: #17a2b8;
+}
+
+.pub-btn.video-btn:hover {
+    background-color: #17a2b8;
+    color: white;
+}
 
 /* Placeholder content for other pages */
 .placeholder-content {
@@ -333,7 +449,7 @@ main {
 
 /* Strong elements */
 strong {
-    color: #E9545D;
+    color: black;
     font-weight: 600;
 }
 
@@ -403,7 +519,9 @@ footer {
     margin: 0;
 }
 
-/* Responsive Design */
+/* ===== レスポンシブデザイン ===== */
+
+/* 大きな画面用 (800px以上) */
 @media (min-width: 800px){
     .section-container{
         display: grid;
@@ -412,7 +530,9 @@ footer {
     }
 }
 
+/* タブレット用 (768px以下) */
 @media (max-width: 768px) {
+    /* フッターナビゲーション */
     .footer-nav-list {
         gap: 1rem;
     }
@@ -421,9 +541,96 @@ footer {
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
     }
+
+    /* 基本レイアウト */
+    body {
+        border-top: solid 4px #E9545D;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    /* 言語切り替えボタン */
+    .language-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .lang-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* ナビゲーション */
+    .nav-list {
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+
+    .nav-link {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* About セクション */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 180px;
+        margin: 0 auto;
+    }
+
+    /* セクション */
+    .section-content {
+        padding: 1.5rem;
+    }
+
+    .section-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .placeholder-content {
+        padding: 2rem;
+        margin: 0.5rem;
+    }
+    /* Publications responsive */
+    .publication-item {
+        gap: 0.8rem;
+    }
+    
+    .publication-item:hover {
+        margin: 0 -1rem;
+        padding: 1.5rem 1rem;
+        transform: none;
+    }
+    
+    .publication-content {
+        gap: 0.6rem;
+    }
+    
+    .publication-buttons {
+        gap: 0.4rem;
+    }
+    
+    .pub-btn {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.75rem;
+    }
 }
 
+/* スマートフォン用 (480px以下) */
 @media (max-width: 480px) {
+    /* フッター */
     footer {
         padding: 2rem 0 1.5rem 0;
     }
@@ -441,68 +648,8 @@ footer {
         font-size: 0.75rem;
         padding: 0.3rem 0.6rem;
     }
-}
 
-@media (max-width: 768px) {
-    body {
-        border-top: solid 4px #E9545D;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    .container {
-        padding: 0 15px;
-    }
-
-    .language-toggle {
-        top: 0.5rem;
-        right: 0.5rem;
-    }
-
-    .lang-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-    }
-
-    .nav-list {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav-link {
-        padding: 1rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        text-align: center;
-    }
-
-    .profile-photo {
-        width: 150px;
-        height: 180px;
-        margin: 0 auto;
-    }
-
-    .section-content {
-        padding: 1.5rem;
-    }
-
-    .section-header {
-        padding: 1rem 1.5rem;
-    }
-
-    .placeholder-content {
-        padding: 2rem;
-        margin: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
+    /* 基本レイアウト */
     .container {
         padding: 0 10px;
     }
@@ -519,6 +666,7 @@ footer {
         font-size: 1rem;
     }
 
+    /* 言語切り替えボタン */
     .language-toggle {
         top: 0.3rem;
         right: 0.3rem;
@@ -533,12 +681,14 @@ footer {
         margin: 0 0.3rem;
     }
 
+    /* ナビゲーション */
     .nav-link {
-        padding: 0.8rem 1rem;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
+        padding: 0.8rem 0.8rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.3px;
     }
 
+    /* セクション */
     .section-content {
         padding: 1rem;
     }
@@ -554,5 +704,36 @@ footer {
     .news-item:hover {
         margin: 0 -0.5rem;
         padding: 1.2rem 0.5rem;
+    }
+    /* Publications mobile responsive */
+    .publication-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .publication-icon {
+        display: none;
+    }
+    
+    .publication-buttons {
+        justify-content: center;
+    }
+    
+    .pub-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* 非常に小さなデバイス用 (320px以下) */
+@media (max-width: 320px) {
+    .nav-link {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.2px;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
     }
 }
