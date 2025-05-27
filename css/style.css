@@ -605,7 +605,12 @@ footer {
     }
     /* Publications responsive */
     .publication-item {
-        gap: 0.8rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #FFEFED;
+        transition: all 0.3s ease;
     }
     
     .publication-item:hover {
