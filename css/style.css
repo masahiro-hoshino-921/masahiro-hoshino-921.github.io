@@ -453,6 +453,76 @@ strong {
     font-weight: 600;
 }
 
+/* CV Specific Styles - Simplified */
+.cv-section {
+    margin-bottom: 2rem;
+}
+
+.cv-section h2 {
+    font-size: 1.4rem;
+    color: #E9545D;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #FFEFED;
+    position: relative;
+    letter-spacing: 0.05em;
+}
+
+.cv-section h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #E9545D;
+}
+
+.cv-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.cv-item {
+    display: flex;                    /* 追加 */
+    align-items: flex-start;          /* 追加 */
+    gap: 1.5rem;                     /* 追加 */
+    padding: 1.2rem 0;              /* 既存と同じ */
+    border-bottom: 1px solid #FFEFED; /* 既存と同じ */
+    transition: all 0.3s ease;      /* 既存と同じ */
+    position: relative;              /* 既存と同じ */
+}
+
+.cv-item:hover {
+    background-color: #FFF8F7;       /* 既存と同じ */
+    margin: 0 -2rem;                /* -1rem から -2rem に変更 */
+    padding: 1.2rem 2rem;           /* 1.2rem 1rem から 1.2rem 2rem に変更 */
+    border-radius: 8px;             /* 4px から 8px に変更 */
+    transform: translateX(5px);      /* 追加 */
+    box-shadow: 0 2px 10px rgba(233, 84, 93, 0.1); /* 追加 */
+}
+
+.cv-date {
+    flex-shrink: 0;                  /* 追加 */
+    width: 200px;                    /* 追加 */
+    font-size: 0.9rem;              /* 既存と同じ */
+    color: #333;                     /* #E9545D から #333 に変更 */
+    font-weight: 600;                /* 既存と同じ */
+    line-height: 1.4;               /* 追加 */
+    text-align: left;                /* 追加 */
+    letter-spacing: 0.3px;           /* 0.5px から 0.3px に変更 */
+    /* text-transform: uppercase; を削除 */
+}
+
+.cv-text {
+    flex: 1;                         /* 追加 */
+    font-size: 1rem;                /* 追加 */
+    color: #333;                     /* #555 から #333 に変更 */
+    line-height: 1.5;               /* 1.7 から 1.5 に変更 */
+    font-weight: 400;               /* 追加 */
+}
 /* Footer Styles */
 footer {
     background: #E9545D;
@@ -630,6 +700,29 @@ footer {
     .pub-btn {
         padding: 0.25rem 0.6rem;
         font-size: 0.75rem;
+    }
+    .cv-item {
+        flex-direction: column;       /* 追加 */
+        gap: 0.5rem;                 /* 追加 */
+        padding: 1rem 0;            /* 1.2rem から 1rem に変更 */
+    }
+
+    .cv-item:hover {
+        margin: 0 -1.5rem;          /* 変更 */
+        padding: 1rem 1.5rem;       /* 変更 */
+        transform: none;             /* 追加 */
+    }
+
+    .cv-date {
+        width: auto;                 /* 追加 */
+        font-size: 0.85rem;         /* 追加 */
+        color: #333;                 /* 追加（#E9545D から変更） */
+        font-weight: 600;            /* 追加 */
+        order: -1;                   /* 追加 */
+    }
+
+    .cv-text {
+        font-size: 0.9rem;          /* 追加 */
     }
 }
 

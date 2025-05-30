@@ -279,10 +279,9 @@ function getPresentationTypeIcon(type) {
 // Get presentation type label with color
 function getPresentationTypeLabel(type) {
     const types = {
-        internationalconference: { label: 'International Conference', color: '#E9545D' },
+        internationalconference: { label: 'International Conference', color: '#28A745' },
         domesticconference: { label: 'Domestic Conference', color: '#D63384' },
         seminar: { label: 'Seminar', color: '#17a2b8' },
-        poster: { label: 'Poster', color: '#28a745' },
         workshop: { label: 'Workshop', color: '#ffc107' },
         invited: { label: 'Invited Talk', color: '#6f42c1' }
     };
@@ -293,8 +292,8 @@ function getPresentationTypeLabel(type) {
 // Get status badge
 function getStatusBadge(status) {
     const statuses = {
-        upcoming: { label: 'Upcoming', color: '#17a2b8', bg: 'rgba(23, 162, 184, 0.1)' },
-        completed: { label: 'Completed', color: '#28a745', bg: 'rgba(40, 167, 69, 0.1)' }
+        upcoming: { label: 'Upcoming', color: '#888', bg: 'rgba(1, 1, 1, 0.05)' },
+        completed: { label: 'Completed', color: '#333', bg: 'rgba(1, 1, 1, 0.1)' }
     };
     
     const statusInfo = statuses[status] || statuses.completed;
