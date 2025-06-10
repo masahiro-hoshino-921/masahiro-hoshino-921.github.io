@@ -1,4 +1,4 @@
-// presentations.js - Presentations functionality
+// presentations.js - Enhanced Presentations functionality with filtering and sorting
 
 // Presentations data
 const presentationsData = [
@@ -191,14 +191,26 @@ const presentationsData = [
         venue: "日本物理学会 第77回年次大会",
         location: "オンライン",
         date: "2022-3-17",
-        format: "oral", // oral, poster
-        status: "completed", // upcoming, completed
+        format: "oral",
+        status: "completed",
         abstract: "",
-        slides: "", // URL to slides if available
-        video: "", // URL to video if available
-        poster: "" // URL to poster if available
+        slides: "",
+        video: "",
+        poster: ""
     }
 ];
+
+// Current filter and sort state
+let currentFilters = {
+    type: 'all',
+    status: 'all',
+    format: 'all'
+};
+
+let currentSort = {
+    field: 'date',
+    order: 'desc'
+};
 
 // Format author names for display (same as publications)
 function formatPresentationAuthors(authorString) {
@@ -279,11 +291,11 @@ function getPresentationTypeIcon(type) {
 // Get presentation type label with color
 function getPresentationTypeLabel(type) {
     const types = {
-        internationalconference: { label: 'International Conference', color: '#28A745' },
-        domesticconference: { label: 'Domestic Conference', color: '#D63384' },
-        seminar: { label: 'Seminar', color: '#17a2b8' },
-        workshop: { label: 'Workshop', color: '#ffc107' },
-        invited: { label: 'Invited Talk', color: '#6f42c1' }
+        internationalconference: { label: 'International Conference', color: '#8B5CF6' },
+        domesticconference: { label: 'Domestic Conference', color: '#16A085' },
+        seminar: { label: 'Seminar', color: '#17A2B8' },
+        workshop: { label: 'Workshop', color: '#F39C12' },
+        invited: { label: 'Invited Talk', color: '#6B7280' }
     };
     
     return types[type] || types.internationalconference;
@@ -292,24 +304,465 @@ function getPresentationTypeLabel(type) {
 // Get status badge
 function getStatusBadge(status) {
     const statuses = {
-        upcoming: { label: 'Upcoming', color: '#888', bg: 'rgba(1, 1, 1, 0.05)' },
-        completed: { label: 'Completed', color: '#333', bg: 'rgba(1, 1, 1, 0.1)' }
+        upcoming: { label: 'Upcoming', color: '#4A90E2', bg: 'rgba(74, 144, 226, 0.1)' },
+        completed: { label: 'Completed', color: '#718096', bg: 'rgba(113, 128, 150, 0.1)' }
     };
     
     const statusInfo = statuses[status] || statuses.completed;
     
     return `<span style="
         display: inline-block;
-        padding: 0.2rem 0.5rem;
-        font-size: 0.7rem;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
         font-weight: 600;
         color: ${statusInfo.color};
         background: ${statusInfo.bg};
-        border-radius: 12px;
+        border-radius: 16px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-left: 0.5rem;
+        margin-left: 0.75rem;
     ">${statusInfo.label}</span>`;
+}
+
+// Filter and sort presentations
+function filterAndSortPresentations() {
+    let filtered = [...presentationsData];
+    
+    // Apply filters
+    if (currentFilters.type !== 'all') {
+        filtered = filtered.filter(p => p.type === currentFilters.type);
+    }
+    
+    if (currentFilters.status !== 'all') {
+        filtered = filtered.filter(p => p.status === currentFilters.status);
+    }
+    
+    if (currentFilters.format !== 'all') {
+        filtered = filtered.filter(p => p.format === currentFilters.format);
+    }
+    
+    // Apply sorting
+    filtered.sort((a, b) => {
+        let aValue, bValue;
+        
+        switch (currentSort.field) {
+            case 'date':
+                aValue = new Date(a.date);
+                bValue = new Date(b.date);
+                break;
+            case 'type':
+                aValue = a.type;
+                bValue = b.type;
+                break;
+            case 'status':
+                aValue = a.status;
+                bValue = b.status;
+                break;
+            case 'title':
+                aValue = a.title.toLowerCase();
+                bValue = b.title.toLowerCase();
+                break;
+            default:
+                aValue = new Date(a.date);
+                bValue = new Date(b.date);
+        }
+        
+        if (aValue < bValue) return currentSort.order === 'asc' ? -1 : 1;
+        if (aValue > bValue) return currentSort.order === 'asc' ? 1 : -1;
+        return 0;
+    });
+    
+    return filtered;
+}
+
+// Generate filter and sort controls
+function generateControlsHTML() {
+    return `
+        <div style="
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 24px rgba(74, 144, 226, 0.08);
+            border: 1px solid rgba(74, 144, 226, 0.06);
+        ">
+            <!-- Main Controls Container -->
+            <div style="
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 2rem;
+                align-items: start;
+            " class="controls-desktop">
+                <!-- Sort Controls (Left) -->
+                <div style="min-width: 200px;">
+                    <label style="
+                        display: block;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: #4A90E2;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-bottom: 0.5rem;
+                    ">Sort by</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <select id="sortField" style="
+                            flex: 1;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="date">Date</option>
+                            <option value="type">Type</option>
+                            <option value="status">Status</option>
+                            <option value="title">Title</option>
+                        </select>
+                        <button id="sortOrder" style="
+                            padding: 0.6rem;
+                            border: 2px solid #4A90E2;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A90E2;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 500;
+                            min-width: 45px;
+                            font-size: 0.9rem;
+                        " title="Toggle sort order">
+                            ${currentSort.order === 'desc' ? '↓' : '↑'}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Controls (Center) -->
+                <div style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                    gap: 1.2rem;
+                ">
+                    <!-- Filter by Type -->
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Type</label>
+                        <select id="filterType" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Types</option>
+                            <option value="internationalconference">International</option>
+                            <option value="domesticconference">Domestic</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="invited">Invited</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter by Status -->
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Status</label>
+                        <select id="filterStatus" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Status</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter by Format -->
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Format</label>
+                        <select id="filterFormat" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Formats</option>
+                            <option value="oral">Oral</option>
+                            <option value="poster">Poster</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Reset Button (Right) -->
+                <div style="min-width: 120px;">
+                    <label style="
+                        display: block;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: transparent;
+                        margin-bottom: 0.5rem;
+                    ">Reset</label>
+                    <button id="resetFilters" style="
+                        width: 100%;
+                        padding: 0.6rem 1rem;
+                        background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Layout -->
+            <div style="display: none;" class="controls-mobile">
+                <div style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                ">
+                    <!-- Sort Controls -->
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Sort</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="sortField-mobile" style="
+                                flex: 1;
+                                padding: 0.6rem 0.8rem;
+                                border: 2px solid #E2E8F0;
+                                border-radius: 10px;
+                                background: white;
+                                color: #4A5568;
+                                font-size: 0.85rem;
+                                font-weight: 500;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                            ">
+                                <option value="date">Date</option>
+                                <option value="type">Type</option>
+                                <option value="status">Status</option>
+                                <option value="title">Title</option>
+                            </select>
+                            <button id="sortOrder-mobile" style="
+                                padding: 0.6rem;
+                                border: 2px solid #4A90E2;
+                                border-radius: 10px;
+                                background: white;
+                                color: #4A90E2;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                font-weight: 500;
+                                min-width: 45px;
+                            " title="Toggle sort order">
+                                ${currentSort.order === 'desc' ? '↓' : '↑'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: transparent;
+                            margin-bottom: 0.5rem;
+                        ">Reset</label>
+                        <button id="resetFilters-mobile" style="
+                            width: 100%;
+                            padding: 0.6rem 1rem;
+                            background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 10px;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        ">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                    gap: 1rem;
+                ">
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Type</label>
+                        <select id="filterType-mobile" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Types</option>
+                            <option value="internationalconference">International</option>
+                            <option value="domesticconference">Domestic</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="invited">Invited</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Status</label>
+                        <select id="filterStatus-mobile" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Status</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="
+                            display: block;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            color: #4A90E2;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            margin-bottom: 0.5rem;
+                        ">Format</label>
+                        <select id="filterFormat-mobile" style="
+                            width: 100%;
+                            padding: 0.6rem 0.8rem;
+                            border: 2px solid #E2E8F0;
+                            border-radius: 10px;
+                            background: white;
+                            color: #4A5568;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        ">
+                            <option value="all">All Formats</option>
+                            <option value="oral">Oral</option>
+                            <option value="poster">Poster</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Counter -->
+            <div id="resultsCounter" style="
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #E2E8F0;
+                font-size: 0.9rem;
+                color: #718096;
+                text-align: center;
+            "></div>
+
+            <!-- Responsive CSS -->
+            <style>
+                @media (max-width: 768px) {
+                    .controls-desktop { display: none !important; }
+                    .controls-mobile { display: block !important; }
+                }
+                @media (min-width: 769px) {
+                    .controls-desktop { display: grid !important; }
+                    .controls-mobile { display: none !important; }
+                }
+            </style>
+        </div>
+    `;
 }
 
 // Generate presentations HTML
@@ -320,20 +773,29 @@ function generatePresentationsHTML() {
         return;
     }
     
-    let html = '';
+    // Generate controls
+    const controlsHTML = generateControlsHTML();
     
-    // Sort presentations by date (newest first)
-    const sortedPresentations = [...presentationsData].sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    });
+    // Get filtered and sorted presentations
+    const filteredPresentations = filterAndSortPresentations();
     
-    sortedPresentations.forEach((presentation, index) => {
+    let html = controlsHTML;
+    
+    // Generate presentation items
+    const presentationsListHTML = filteredPresentations.map((presentation, index) => {
         try {
             const authors = formatPresentationAuthors(presentation.authors);
             const formattedDate = formatPresentationDate(presentation.date);
             const typeIcon = getPresentationTypeIcon(presentation.type);
             const typeInfo = getPresentationTypeLabel(presentation.type);
             const statusBadge = getStatusBadge(presentation.status);
+            
+            // Find original index for abstract modal
+            const originalIndex = presentationsData.findIndex(p => 
+                p.title === presentation.title && 
+                p.date === presentation.date && 
+                p.venue === presentation.venue
+            );
             
             // Generate buttons based on available materials
             let buttons = [];
@@ -355,12 +817,12 @@ function generatePresentationsHTML() {
             }
             
             if (presentation.abstract) {
-                buttons.push(`<button class="pub-btn" onclick="openAbstract(${index})">Abstract</button>`);
+                buttons.push(`<button class="pub-btn" onclick="openAbstract(${originalIndex})">Abstract</button>`);
             }
             
             const buttonsHtml = buttons.length > 0 ? buttons.join('\n                        ') : '';
             
-            html += `
+            return `
                 <div class="publication-item presentation-item">
                     <div class="publication-icon" style="color: ${typeInfo.color};">
                         ${typeIcon}
@@ -375,7 +837,7 @@ function generatePresentationsHTML() {
                             </div>
                             <div class="publication-title" style="margin: 0 0 0.3rem 0; line-height: 1.3;">${presentation.title}</div>
                             <div class="publication-authors" style="margin-bottom: 0.2rem; font-size: 0.9rem;">${authors}</div>
-                            <div class="presentation-details" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; color: #666; font-size: 0.85rem;">
+                            <div class="presentation-details" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; color: #718096; font-size: 0.85rem;">
                                 <span>${presentation.venue}${presentation.location ? `, ${presentation.location}` : ''}</span>
                                 <span>•</span>
                                 <span>${formattedDate}</span>
@@ -388,13 +850,144 @@ function generatePresentationsHTML() {
             `;
         } catch (error) {
             console.warn('Error processing presentation:', error);
+            return '';
         }
-    });
+    }).join('');
+    
+    html += `<div class="presentations-list-content">${presentationsListHTML}</div>`;
     
     presentationsContainer.innerHTML = html;
+    
+    // Update results counter
+    updateResultsCounter(filteredPresentations.length);
+    
+    // Add event listeners
+    addControlEventListeners();
 }
 
-// Open abstract modal
+// Update results counter
+function updateResultsCounter(count) {
+    const counter = document.getElementById('resultsCounter');
+    if (counter) {
+        const total = presentationsData.length;
+        counter.textContent = `Showing ${count} of ${total} presentations`;
+    }
+}
+
+// Add event listeners for controls
+function addControlEventListeners() {
+    // Helper function to add listeners to both desktop and mobile elements
+    function addListenersToBoth(desktopId, mobileId, eventType, handler) {
+        const desktopElement = document.getElementById(desktopId);
+        const mobileElement = document.getElementById(mobileId);
+        
+        if (desktopElement) {
+            desktopElement.addEventListener(eventType, handler);
+        }
+        if (mobileElement) {
+            mobileElement.addEventListener(eventType, handler);
+        }
+    }
+    
+    // Helper function to set values for both desktop and mobile elements
+    function setValueForBoth(desktopId, mobileId, value) {
+        const desktopElement = document.getElementById(desktopId);
+        const mobileElement = document.getElementById(mobileId);
+        
+        if (desktopElement) {
+            desktopElement.value = value;
+        }
+        if (mobileElement) {
+            mobileElement.value = value;
+        }
+    }
+    
+    // Sort field change
+    setValueForBoth('sortField', 'sortField-mobile', currentSort.field);
+    addListenersToBoth('sortField', 'sortField-mobile', 'change', (e) => {
+        currentSort.field = e.target.value;
+        generatePresentationsHTML();
+    });
+    
+    // Sort order toggle
+    addListenersToBoth('sortOrder', 'sortOrder-mobile', 'click', () => {
+        currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+        generatePresentationsHTML();
+    });
+    
+    // Filter type
+    setValueForBoth('filterType', 'filterType-mobile', currentFilters.type);
+    addListenersToBoth('filterType', 'filterType-mobile', 'change', (e) => {
+        currentFilters.type = e.target.value;
+        generatePresentationsHTML();
+    });
+    
+    // Filter status
+    setValueForBoth('filterStatus', 'filterStatus-mobile', currentFilters.status);
+    addListenersToBoth('filterStatus', 'filterStatus-mobile', 'change', (e) => {
+        currentFilters.status = e.target.value;
+        generatePresentationsHTML();
+    });
+    
+    // Filter format
+    setValueForBoth('filterFormat', 'filterFormat-mobile', currentFilters.format);
+    addListenersToBoth('filterFormat', 'filterFormat-mobile', 'change', (e) => {
+        currentFilters.format = e.target.value;
+        generatePresentationsHTML();
+    });
+    
+    // Reset filters
+    addListenersToBoth('resetFilters', 'resetFilters-mobile', 'click', () => {
+        currentFilters = { type: 'all', status: 'all', format: 'all' };
+        currentSort = { field: 'date', order: 'desc' };
+        generatePresentationsHTML();
+    });
+    
+    // Add hover effects for select elements
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        select.addEventListener('mouseenter', () => {
+            select.style.borderColor = '#4A90E2';
+        });
+        select.addEventListener('mouseleave', () => {
+            select.style.borderColor = '#E2E8F0';
+        });
+        select.addEventListener('focus', () => {
+            select.style.borderColor = '#4A90E2';
+            select.style.boxShadow = '0 0 0 3px rgba(74, 144, 226, 0.1)';
+        });
+        select.addEventListener('blur', () => {
+            select.style.borderColor = '#E2E8F0';
+            select.style.boxShadow = 'none';
+        });
+    });
+    
+    // Add hover effects for buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.id === 'sortOrder' || button.id === 'sortOrder-mobile') {
+            button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#4A90E2';
+                button.style.color = 'white';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = 'white';
+                button.style.color = '#4A90E2';
+            });
+        } else if (button.id === 'resetFilters' || button.id === 'resetFilters-mobile') {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-2px)';
+                button.style.boxShadow = '0 6px 16px rgba(74, 144, 226, 0.25)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
+                button.style.boxShadow = 'none';
+            });
+        }
+    });
+}
+
+// Open abstract modal (unchanged)
 function openAbstract(index) {
     const presentation = presentationsData[index];
     
@@ -417,7 +1010,7 @@ function openAbstract(index) {
     const modalContent = document.createElement('div');
     modalContent.style.cssText = `
         background: white;
-        border-radius: 12px;
+        border-radius: 16px;
         padding: 2rem;
         max-width: 700px;
         width: 90%;
@@ -435,13 +1028,13 @@ function openAbstract(index) {
                 <div style="color: ${typeInfo.color}; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">
                     ${typeInfo.label} Abstract
                 </div>
-                <h2 style="color: #333; font-size: 1.3rem; margin: 0; line-height: 1.4;">${presentation.title}</h2>
+                <h2 style="color: #2D3748; font-size: 1.3rem; margin: 0; line-height: 1.4;">${presentation.title}</h2>
             </div>
             <button id="closeModal" style="
                 background: none;
                 border: none;
                 font-size: 1.5rem;
-                color: #999;
+                color: #A0AEC0;
                 cursor: pointer;
                 padding: 0.5rem;
                 border-radius: 50%;
@@ -453,17 +1046,17 @@ function openAbstract(index) {
                 transition: all 0.3s ease;
                 flex-shrink: 0;
                 margin-left: 1rem;
-            " onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">×</button>
+            " onmouseover="this.style.background='#F7FAFC'; this.style.color='#4A5568';" onmouseout="this.style.background='none'; this.style.color='#A0AEC0';">×</button>
         </div>
         <div style="margin-bottom: 1.5rem;">
-            <div style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            <div style="color: #718096; font-size: 0.9rem; margin-bottom: 0.5rem;">
                 ${presentation.venue} ${presentation.location ? `, ${presentation.location}` : ''}
             </div>
-            <div style="color: #666; font-size: 0.9rem;">
+            <div style="color: #718096; font-size: 0.9rem;">
                 ${formatPresentationDate(presentation.date)}
             </div>
         </div>
-        <div style="background: #f8f9fa; border-radius: 8px; padding: 1.5rem; line-height: 1.6; color: #333;">
+        <div style="background: #F7FAFC; border-radius: 12px; padding: 1.5rem; line-height: 1.7; color: #4A5568;">
             ${presentation.abstract}
         </div>
     `;
@@ -502,8 +1095,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generate presentations immediately
     try {
         generatePresentationsHTML();
-        console.log('Presentations generated successfully');
+        console.log('Enhanced presentations with filtering generated successfully');
     } catch (error) {
-        console.error('Error initializing presentations:', error);
+        console.error('Error initializing enhanced presentations:', error);
     }
 });
