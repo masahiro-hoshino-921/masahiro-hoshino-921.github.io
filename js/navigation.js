@@ -104,7 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.forEach(element => {
             const text = element.getAttribute('data-' + lang);
             if (text) {
-                if (element.innerHTML.includes('&copy;')) {
+                // HTMLタグが含まれているかチェック
+                if (text.includes('<') && text.includes('>')) {
+                    element.innerHTML = text;
+                } else if (element.innerHTML.includes('&copy;')) {
                     element.innerHTML = text;
                 } else {
                     element.textContent = text;
@@ -126,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // ★ 初期化時に言語切り替えを実行してHTMLタグを適用
+    switchLanguage(currentLanguage);
+    updateLanguageButton();
+
     // Initialize image slideshow
     initializeImageSlideshow();
     
@@ -134,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (homePage && homePage.classList.contains('active')) {
         startImageSlideshow();
     }
+
 });
 
 // Image slideshow functionality
