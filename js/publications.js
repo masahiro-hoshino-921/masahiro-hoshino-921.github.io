@@ -3,6 +3,18 @@
 // Publications data in BibTeX format
 const publicationsDataBibTeX = [
     `@misc{hoshino2025stabilizer,
+    title = {Stabilizer R{\\'e}nyi Entropy Encodes Fusion Rules of Topological Defects and Boundaries},
+    author = {Hoshino, Masahiro and Ashida, Yuto},
+    year = {2025},
+    number = {arXiv:2507.10656},
+    eprint = {2507.10656},
+    primaryclass = {quant-ph},
+    publisher = {arXiv},
+    doi = {10.48550/arXiv.2507.10656},
+    archiveprefix = {arXiv},
+    pdf = {https://arxiv.org/pdf/2507.10656}
+}`,
+    `@misc{hoshino2025stabilizer,
     title = {Stabilizer R{\\'e}nyi Entropy and Conformal Field Theory},
     author = {Hoshino, Masahiro and Oshikawa, Masaki and Ashida, Yuto},
     year = {2025},
