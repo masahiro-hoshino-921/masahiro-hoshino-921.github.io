@@ -9,7 +9,7 @@ const presentationsData = [
         venue: "SQAI-NCTS Workshop on Quantum Technologies and Machine Learning",
         location: "National Taiwan University, Taipei, Taiwan",
         date: "2025-8-25",
-        format: "",
+        format: "oral",
         status: "upcoming",
         abstract: "Along with entanglement, the nonstabilizerness (or magic) of quantum systems has been recognized as a crucial resource for achieving quantum computational advantage. The stabilizer Rényi entropy (SRE) has recently been established as a computationally tractable measure of nonstabilizerness, with numerical studies revealing universal behavior of the SRE in critical quantum spin chains. In this work, we unveil the origin of this universality through boundary conformal field theory calculations of the SRE. Our analysis demonstrates that the SRE of the entire system contains a universal constant term linked to the g-factor of  the boundary condition imposed by Bell-state measurements, while the mutual SRE exhibits universal logarithmic scaling with a coefficient determined by the scaling dimension of a boundary operator. These findings establish a field-theoretical framework for understanding the universal features of nonstabilizerness in quantum many-body systems.",
         slides: "",
@@ -18,17 +18,17 @@ const presentationsData = [
     },
     {
         type: "domesticconference",
-        title: "スタビライザーエントロピーと共形場理論",
+        title: "量子マジックと共形場理論",
         authors: "星野真宏, 押川正毅, 蘆田祐人",
         venue: "第70回物性若手夏の学校",
         location: "滋賀",
-        date: "2025-7-29",
+        date: "2025-7-30",
         format: "poster",
-        status: "upcoming",
+        status: "completed",
         abstract: "",
         slides: "",
         video: "",
-        poster: ""
+        poster: "slides/HOA2025_poster.pdf"
     },
     {
         type: "workshop",
