@@ -10,9 +10,9 @@ const presentationsData = [
         location: "National Taiwan University, Taipei, Taiwan",
         date: "2025-8-25",
         format: "oral",
-        status: "upcoming",
+        status: "completed",
         abstract: "Along with entanglement, the nonstabilizerness (or magic) of quantum systems has been recognized as a crucial resource for achieving quantum computational advantage. The stabilizer Rényi entropy (SRE) has recently been established as a computationally tractable measure of nonstabilizerness, with numerical studies revealing universal behavior of the SRE in critical quantum spin chains. In this work, we unveil the origin of this universality through boundary conformal field theory calculations of the SRE. Our analysis demonstrates that the SRE of the entire system contains a universal constant term linked to the g-factor of  the boundary condition imposed by Bell-state measurements, while the mutual SRE exhibits universal logarithmic scaling with a coefficient determined by the scaling dimension of a boundary operator. These findings establish a field-theoretical framework for understanding the universal features of nonstabilizerness in quantum many-body systems.",
-        slides: "",
+        slides: "slides/HA2025_taiwan.pdf",
         video: "",
         poster: ""
     },
