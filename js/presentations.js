@@ -3,6 +3,34 @@
 // Presentations data
 const presentationsData = [
     {
+        type: "seminar",
+        title: "Quantum magic and Conformal Field Theory",
+        authors: "Masahiro Hoshino, Masaki Oshikawa, Yuto Ashida",
+        venue: "M A Rajabpour group seminar, Fluminense Federal University, Brazil",
+        location: "Online",
+        date: "2025-10-16",
+        format: "oral",
+        status: "upcoming",
+        abstract: "",
+        slides: "",
+        video: "",
+        poster: ""
+    },
+    {
+        type: "domesticconference",
+        title: "共形場理論による量子マジックの解析",
+        authors: "星野真宏, 押川正毅, 蘆田祐人",
+        venue: "日本物理学会第80回年次大会",
+        location: "広島大学",
+        date: "2025-9-19",
+        format: "oral",
+        status: "upcoming",
+        abstract: "",
+        slides: "slides/JPS2025A.pdf",
+        video: "",
+        poster: ""
+    },
+    {
         type: "workshop",
         title: "Stabilizer Rényi Entropy and Conformal Field Theory",
         authors: "Masahiro Hoshino, Masaki Oshikawa, Yuto Ashida",
