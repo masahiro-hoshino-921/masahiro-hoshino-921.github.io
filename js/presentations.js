@@ -24,7 +24,7 @@ const presentationsData = [
         location: "広島大学",
         date: "2025-9-19",
         format: "oral",
-        status: "upcoming",
+        status: "completed",
         abstract: "",
         slides: "slides/JPS2025A.pdf",
         video: "",
