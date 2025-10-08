@@ -3,7 +3,9 @@ let currentLanguage = 'en';
 
 // Image slideshow configuration
 const profileImages = [
+    'images/ruka_2.jpg',
     'images/nozomu.jpg',
+    'images/rukarin.jpg',
     'images/harumaki.jpg',
     'images/marimo.jpg',
     'images/ruka.jpg',
