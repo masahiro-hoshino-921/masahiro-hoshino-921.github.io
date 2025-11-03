@@ -7,6 +7,11 @@
     <title>Masahiro Hoshino | 星野真宏</title>
     <link rel="icon" type="image/ico" href="images/favicon.ico">
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/style.css">
     <script src="js/navigation.js" defer></script>
     <script src="js/publications.js" defer></script>
@@ -15,44 +20,49 @@
 
 <body>
     <header>
-        <div class="container">
-            <div class="language-toggle">
-                <button id="langToggle" class="lang-btn">
-                    <span class="lang-current">EN</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-other">JA</span>
-                </button>
+        <div class="header-top">
+            <div class="header-top-inner">
+                <div class="language-toggle">
+                    <button id="langToggle" class="lang-btn">
+                        <span class="lang-current">EN</span>
+                        <span class="lang-divider">|</span>
+                        <span class="lang-other">JA</span>
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <div class="container header-container">
             <div class="header-content">
                 <h1 data-en="Masahiro Hoshino" data-ja="星野 真宏">Masahiro Hoshino</h1>
-                <p class="subtitle" data-en="Department of Physics, University of Tokyo" data-ja="東京大学 理学系研究科 物理学専攻">Department of Physics, University of Tokyo</p>
+                <p class="subtitle" data-en="Department of Physics, University of Tokyo" data-ja="東京大学 物理学専攻">Department of Physics, University of Tokyo</p>
             </div>
+
+            <nav>
+                <div class="nav-container">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link active" data-page="home" data-en="Home" data-ja="ホーム">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#publication" class="nav-link" data-page="publication" data-en="Publication" data-ja="論文">Publication</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#presentation" class="nav-link" data-page="presentation" data-en="Presentation" data-ja="発表">Presentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#cv" class="nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <nav>
-        <div class="nav-container">
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" data-page="home" data-en="Home" data-ja="ホーム">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-page="publication" data-en="Publication" data-ja="論文">Publication</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-page="presentation" data-en="Presentation" data-ja="発表">Presentation</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
     <main>
         <div class="container">
-            <!-- Home Page Content -->
-            <div id="home" class="page-content active">
+            <section id="home" class="page-content active">
                 <div class="content-section">
                     <div class="section-header">
                         <h2 class="section-title" data-en="About Me" data-ja="自己紹介">About Me</h2>
@@ -60,16 +70,14 @@
                     <div class="section-content">
                         <div class="about-grid">
                             <div class="profile-photo">
-                                <!-- Images will be dynamically loaded by JavaScript -->
-                                <!-- Fallback image while JavaScript loads -->
                                 <img src="images/ruka_2.jpg" alt="ruka" style="opacity: 1;">
                             </div>
                             <div class="bio-text">
-                                <p data-en="Welcome to my website! I am a graduate student exploring informational aspects of quantum many-body systems." data-ja="私は東京大学で物理学を専攻する大学院生です。量子多体系の情報理論的側面を研究しています。">Welcome to my website! I am a graduate student exploring informational aspects of quantum many-body systems.</p>
+                                <p data-en="Welcome to my website! I am a graduate student exploring informational aspects of quantum many-body systems." data-ja="東京大学 理学系研究科 物理学専攻の大学院生です。量子多体系の情報理論的側面を研究しています。">Welcome to my website! I am a graduate student exploring informational aspects of quantum many-body systems.</p>
                                 
                                 <p data-en="Keywords: conformal field theory, entanglement, measurement, nonstabilizerness (quantum magic)" data-ja="キーワード: 共形場理論、エンタングルメント、量子測定、非スタビライザー性（quantum magic）">Keywords: conformal field theory, entanglement, measurement, nonstabilizerness (quantum magic)</p>
                                 <br>
-                                <p data-en="I am currently working under the supervision of Yuto Ashida." data-ja="東京大学の蘆田研究室に所属しています。">I am currently working under the supervision of Yuto Ashida.</p>
+                                <p data-en="I belong to the Ashida group." data-ja="東京大学の蘆田研究室に所属しています。">I belong to the Ashida group.</p>
                                 <br>
                                 <p data-en="I am a geek for coffee and red pandas." data-ja="趣味はコーヒーとレッサーパンダです。">I am a geek for coffee and red pandas.</p>
                             </div>
@@ -96,7 +104,7 @@
                         </div>
                         <div class="news-item">
                             <div class="news-date" data-en="8/2/2025" data-ja="2025年8月2日">8/2/2025</div>
-                            <div class="news-text" data-en="I attended the <a href='https://cmpss.jp/' target='_blank' rel='noopener'>70th condensed matter physics summer school</a> and gave a poster presentation. I was awarded as an excellent presenter." data-ja="<a href='https://cmpss.jp/' target='_blank' rel='noopener'>第70回物性若手夏の学校</a>に準備局として参加し、ポスター発表を行いました。優秀発表賞をいただくことができました。">I attended the <a href='https://cmpss.jp/' target='_blank' rel='noopener'>70th condensed matter physics summer school</a> and gave a poster presentation. I was awarded as an excellent presenter.</div>
+                            <div class="news-text" data-en="I attended the <a href='https.cmpss.jp/' target='_blank' rel='noopener'>70th condensed matter physics summer school</a> and gave a poster presentation. I was awarded as an excellent presenter." data-ja="<a href='https.cmpss.jp/' target='_blank' rel='noopener'>第70回物性若手夏の学校</a>に準備局として参加し、ポスター発表を行いました。優秀発表賞をいただくことができました。">I attended the <a href='https.cmpss.jp/' target='_blank' rel='noopener'>70th condensed matter physics summer school</a> and gave a poster presentation. I was awarded as an excellent presenter.</div>
                         </div>
                         <div class="news-item">
                             <div class="news-date" data-en="7/1/2025" data-ja="2025年7月1日">7/1/2025</div>
@@ -163,38 +171,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Publication Page Content -->
-            <div id="publication" class="page-content">
+            <section id="publication" class="page-content">
                 <div class="content-section">
                     <div class="section-header">
                         <h2 class="section-title" data-en="Publications" data-ja="論文">Publications</h2>
                     </div>
                     <div class="section-content">
                         <div id="publications-list" class="publications-container">
-                            <!-- Publications will be dynamically generated here -->
-                        </div>
+                            </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Presentation Page Content -->
-            <div id="presentation" class="page-content">
+            <section id="presentation" class="page-content">
                 <div class="content-section">
                     <div class="section-header">
                         <h2 class="section-title" data-en="Presentations" data-ja="発表">Presentations</h2>
                     </div>
                     <div class="section-content">
                         <div id="presentations-list" class="presentations-container">
-                            <!-- Presentations will be dynamically generated here -->
-                        </div>
+                            </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- CV Page Content -->
-            <div id="cv" class="page-content">
+            <section id="cv" class="page-content">
                 <div class="content-section">
                     <div class="section-header">
                         <h2 class="section-title" data-en="Curriculum Vitae" data-ja="経歴">Curriculum Vitae</h2>
@@ -260,7 +263,7 @@
 
                     </div>
                 </div>
-            </div>
+            </section>
 
         </div>
     </main>
@@ -268,24 +271,6 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- フッターナビゲーション -->
-                <nav class="footer-nav">
-                    <ul class="footer-nav-list">
-                        <li class="footer-nav-item">
-                            <a href="#" class="footer-nav-link" data-page="home" data-en="Home" data-ja="ホーム">Home</a>
-                        </li>
-                        <li class="footer-nav-item">
-                            <a href="#" class="footer-nav-link" data-page="publication" data-en="Publication" data-ja="論文">Publication</a>
-                        </li>
-                        <li class="footer-nav-item">
-                            <a href="#" class="footer-nav-link" data-page="presentation" data-en="Presentation" data-ja="発表">Presentation</a>
-                        </li>
-                        <li class="footer-nav-item">
-                            <a href="#" class="footer-nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- コピーライト -->
                 <p data-en="&copy; 2025 Masahiro Hoshino. All rights reserved." data-ja="&copy; 2025 Masahiro Hoshino. All rights reserved.">&copy; 2025 Masahiro Hoshino. All rights reserved.</p>
             </div>
         </div>

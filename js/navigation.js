@@ -18,38 +18,33 @@ let currentImageIndex = 0;
 let imageInterval;
 const IMAGE_CHANGE_INTERVAL = 4000; // 4 seconds
 
-// Navigation functionality
+// --- ナビゲーションロジック (フッター参照を削除) ---
+
 document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pageContents = document.querySelectorAll('.page-content');
+    
+    const allNavLinks = document.querySelectorAll('.nav-link');
+    const headerNavLinks = document.querySelectorAll('.nav-link');
+    const pageSections = document.querySelectorAll('.page-content');
     const langToggle = document.getElementById('langToggle');
 
-    // Navigation tab switching
-    navLinks.forEach(link => {
+    // --- 1. スムーススクロール機能 ---
+    allNavLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            const targetId = this.getAttribute('href');
             
-            // Remove active class from all nav links
-            navLinks.forEach(nl => nl.classList.remove('active'));
-            
-            // Add active class to clicked nav link
-            this.classList.add('active');
-            
-            // Hide all page contents
-            pageContents.forEach(pc => pc.classList.remove('active'));
-            
-            // Show selected page content
-            const targetPage = this.getAttribute('data-page');
-            document.getElementById(targetPage).classList.add('active');
-
-            // Update footer nav active state
-            footerNavLinks.forEach(fnl => fnl.classList.remove('active'));
-            const correspondingFooterLink = document.querySelector(`.footer-nav-link[data-page="${targetPage}"]`);
-            if (correspondingFooterLink) {
-                correspondingFooterLink.classList.add('active');
+            if (targetId && targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             }
+            
+            const targetPage = this.getAttribute('data-page');
+            updateActiveNavLinks(targetPage); // クリック直後の反応性のため
 
-            // Start/stop slideshow based on page
             if (targetPage === 'home') {
                 startImageSlideshow();
             } else {
@@ -57,49 +52,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Footer navigation functionality
-    const footerNavLinks = document.querySelectorAll('.footer-nav-link');
 
-    footerNavLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-        
-            // Remove active class from all nav links (header and footer)
-            navLinks.forEach(nl => nl.classList.remove('active'));
-            footerNavLinks.forEach(fnl => fnl.classList.remove('active'));
-            
-            // Add active class to clicked footer nav link
-            this.classList.add('active');
-            
-            // Find corresponding header nav link and activate it
-            const targetPage = this.getAttribute('data-page');
-            const correspondingHeaderLink = document.querySelector(`.nav-link[data-page="${targetPage}"]`);
-            if (correspondingHeaderLink) {
-                correspondingHeaderLink.classList.add('active');
-            }
-            
-            // Hide all page contents
-            pageContents.forEach(pc => pc.classList.remove('active'));
-            
-            // Show selected page content
-            document.getElementById(targetPage).classList.add('active');
+    // --- 2. スクロールスパイ (IntersectionObserver) ---
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3 // セクションが30%見えたらトリガー
+    };
 
-            // Start/stop slideshow based on page
-            if (targetPage === 'home') {
-                startImageSlideshow();
-            } else {
-                stopImageSlideshow();
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const targetPage = entry.target.id;
+                updateActiveNavLinks(targetPage);
             }
         });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    pageSections.forEach(section => {
+        observer.observe(section);
     });
+
+    // --- 3. ナビゲーションのアクティブ状態を更新するヘルパー関数 ---
+    function updateActiveNavLinks(targetPage) {
+        // ヘッダーナビ
+        headerNavLinks.forEach(nl => {
+            if (nl.getAttribute('data-page') === targetPage) {
+                nl.classList.add('active');
+            } else {
+                nl.classList.remove('active');
+            }
+        });
+    }
+
     
+    // --- (ここから下は既存の機能) ---
+
     // Language toggle functionality
-    langToggle.addEventListener('click', function() {
-        currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
-        switchLanguage(currentLanguage);
-        updateLanguageButton();
-    });
+    if (langToggle) {
+        langToggle.addEventListener('click', function() {
+            currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
+            switchLanguage(currentLanguage);
+            updateLanguageButton();
+        });
+    }
 
     function switchLanguage(lang) {
         const elements = document.querySelectorAll('[data-en][data-ja]');
@@ -144,6 +142,25 @@ document.addEventListener('DOMContentLoaded', function() {
         startImageSlideshow();
     }
 
+    // Pause slideshow when user hovers over the image
+    const profilePhotoContainer = document.querySelector('.profile-photo');
+    if (profilePhotoContainer) {
+        profilePhotoContainer.addEventListener('mouseenter', () => {
+            stopImageSlideshow();
+        });
+
+        profilePhotoContainer.addEventListener('mouseleave', () => {
+            // 現在 'home' セクションがアクティブ（表示）されているかチェック
+            const homeSection = document.getElementById('home');
+            const navHome = document.querySelector('.nav-link[data-page="home"]');
+            
+            // homeセクションがアクティブな場合のみスライドショーを再開
+            if (navHome && navHome.classList.contains('active')) {
+                startImageSlideshow();
+            }
+        });
+    }
+
 });
 
 // Image slideshow functionality
@@ -162,7 +179,10 @@ function initializeImageSlideshow() {
         const img = document.createElement('img');
         img.src = imageSrc;
         img.alt = `Profile photo ${index + 1}`;
+        
         img.style.opacity = index === 0 ? '1' : '0';
+        img.style.zIndex = index === 0 ? '2' : '1'; 
+
         img.addEventListener('error', function() {
             console.warn(`Failed to load image: ${imageSrc}`);
             // Hide this image if it fails to load
@@ -171,6 +191,8 @@ function initializeImageSlideshow() {
         profilePhotoContainer.appendChild(img);
     });
 
+    // ★★★ 変更点: ナビゲーションドットの生成コードを削除 ★★★
+    /*
     // Create navigation dots
     if (profileImages.length > 1) {
         const navContainer = document.createElement('div');
@@ -185,6 +207,8 @@ function initializeImageSlideshow() {
 
         profilePhotoContainer.appendChild(navContainer);
     }
+    */
+    // ★★★ 変更点ここまで ★★★
 }
 
 function startImageSlideshow() {
@@ -205,6 +229,8 @@ function stopImageSlideshow() {
     }
 }
 
+// ★★★ 変更点: goToImage関数を削除 (ドットからしか呼ばれないため) ★★★
+/*
 function goToImage(index) {
     if (index === currentImageIndex) return;
     
@@ -216,13 +242,16 @@ function goToImage(index) {
         startImageSlideshow();
     }
 }
+*/
+// ★★★ 変更点ここまで ★★★
+
 
 function updateCurrentImage() {
     const profilePhotoContainer = document.querySelector('.profile-photo');
     if (!profilePhotoContainer) return;
 
     const images = profilePhotoContainer.querySelectorAll('img');
-    const dots = profilePhotoContainer.querySelectorAll('.nav-dot');
+    // const dots = profilePhotoContainer.querySelectorAll('.nav-dot'); // ★★★ 変更点: 削除
 
     // Update images
     images.forEach((img, index) => {
@@ -235,6 +264,8 @@ function updateCurrentImage() {
         }
     });
 
+    // ★★★ 変更点: ドット更新処理を削除 ★★★
+    /*
     // Update navigation dots
     dots.forEach((dot, index) => {
         if (index === currentImageIndex) {
@@ -243,23 +274,6 @@ function updateCurrentImage() {
             dot.classList.remove('active');
         }
     });
+    */
+    // ★★★ 変更点ここまで ★★★
 }
-
-// Pause slideshow when user hovers over the image
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const profilePhotoContainer = document.querySelector('.profile-photo');
-        if (profilePhotoContainer) {
-            profilePhotoContainer.addEventListener('mouseenter', () => {
-                stopImageSlideshow();
-            });
-
-            profilePhotoContainer.addEventListener('mouseleave', () => {
-                const homePage = document.getElementById('home');
-                if (homePage && homePage.classList.contains('active')) {
-                    startImageSlideshow();
-                }
-            });
-        }
-    }, 500);
-});
