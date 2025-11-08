@@ -324,7 +324,7 @@ main {
 }
 
 .bio-text p {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.7rem; 
     color: var(--color-text-secondary);
 }
 
@@ -378,8 +378,6 @@ main {
 .news-item:hover {
     background-color: var(--color-bg-primary);
     transform: translateX(4px);
-    border-left: 3px solid var(--color-primary);
-    padding-left: calc(0.8rem - 3px);
 }
 
 .news-item:last-child {
@@ -467,21 +465,14 @@ main {
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-bottom: 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
 }
 
 .link-category-title::before {
-    content: '';
-    width: 3px;
-    height: 0.9rem;
-    background: var(--color-primary);
-    border-radius: 1.5px;
+    display: none;
 }
 
 .link-list {
-    line-height: 1.6;
+    line-height: 1.4; 
 }
 
 .link-item {
@@ -498,10 +489,9 @@ main {
 .link-item:hover {
     color: var(--color-primary-dark);
     border-bottom-color: var(--color-primary);
-    transform: translateX(2px);
 }
 
-/* ==================== PUBLICATIONS ==================== */
+/* ==================== PUBLICATIONS SECTION ==================== */
 .publications-container {
     display: flex;
     flex-direction: column;
@@ -545,6 +535,10 @@ main {
     color: var(--color-primary) !important;
 }
 
+.publication-item:hover .publication-icon {
+    opacity: 1;
+}
+
 .publication-content {
     flex: 1;
     display: flex;
@@ -554,13 +548,6 @@ main {
 
 .publication-main {
     line-height: 1.6;
-}
-
-.publication-authors {
-    color: var(--color-text-secondary);
-    font-weight: 500;
-    margin-bottom: 0.15rem;
-    font-size: 0.92rem;
 }
 
 .publication-title {
@@ -579,6 +566,11 @@ main {
     color: var(--color-primary-dark);
 }
 
+.publication-venue {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+}
+
 .publication-journal {
     color: var(--color-text-muted);
     font-size: 0.92rem;
@@ -592,8 +584,8 @@ main {
 }
 
 .pub-btn {
-    padding: 0.4rem 0.85rem;
-    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem; 
+    font-size: 0.7rem; 
     font-weight: 500;
     text-decoration: none;
     border: 1px solid var(--color-border);
@@ -605,6 +597,7 @@ main {
     letter-spacing: 0.4px;
     cursor: pointer;
     font-family: inherit;
+    display: inline-block;
 }
 
 .pub-btn:hover {
@@ -626,30 +619,88 @@ main {
     color: white;
 }
 
-/* ==================== PRESENTATIONS ==================== */
-.presentation-type[style] {
-    color: var(--color-text-secondary) !important;
+/* ==================== PRESENTATIONS SECTION ==================== */
+.presentations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.presentation-item {
+    border-radius: 12px;
+}
+
+.presentation-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.presentation-type {
+    font-size: 0.75rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-primary); 
 }
 
-span[style*="background: rgba"] {
-    background: var(--color-primary-light) !important;
-    color: var(--color-primary) !important;
+.status-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
 }
 
-#presentations-list > div[style*="background: white"] {
-    padding: 1.5rem !important;
-    border: 1px solid var(--color-border) !important;
-    border-radius: 12px !important;
-    margin-bottom: 2rem !important;
-    box-shadow: none !important;
-    background: var(--color-bg-secondary) !important;
+.status-upcoming {
+    background: #FFF4E6;
+    color: #E67E22;
+}
+
+.status-completed {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
+
+.presentation-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+/* ======================================================== */
+/* Publications filter controls styling (MODIFIED SECTION) */
+/* ======================================================== */
+.controls-desktop,
+.controls-mobile {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 100%);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
 }
 
 .controls-desktop {
-    display: grid !important;
-    grid-template-columns: auto 1fr auto !important;
-    gap: 1.5rem !important;
+    display: block;
+}
+
+.controls-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .controls-desktop {
+        display: none;
+    }
+    
+    .controls-mobile {
+        display: block;
+    }
 }
 
 .controls-desktop > div,
@@ -675,8 +726,11 @@ span[style*="background: rgba"] {
     gap: 1rem !important;
 }
 
-#presentations-list select,
-#presentations-list button {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop select,
+.controls-mobile select,
+.controls-desktop button,
+.controls-mobile button {
     width: 100% !important;
     padding: 0.65rem 1rem !important;
     font-size: 0.85rem !important;
@@ -687,17 +741,24 @@ span[style*="background: rgba"] {
     font-weight: 500;
 }
 
-#presentations-list button {
+/* MODIFIED: Made selector more specific */
+.controls-desktop button,
+.controls-mobile button {
     cursor: pointer !important;
 }
 
-#presentations-list select:hover,
-#presentations-list select:focus {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop select:hover,
+.controls-mobile select:hover,
+.controls-desktop select:focus,
+.controls-mobile select:focus {
     border-color: var(--color-primary) !important;
     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1) !important;
 }
 
-#presentations-list button[title="Toggle sort order"] {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop button[title="Toggle sort order"],
+.controls-mobile button[title="Toggle sort order"] {
     width: 45px !important;
     min-width: 45px !important;
     flex-shrink: 0;
@@ -705,19 +766,25 @@ span[style*="background: rgba"] {
     border-color: var(--color-primary) !important;
 }
 
-#presentations-list button[title="Toggle sort order"]:hover {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop button[title="Toggle sort order"]:hover,
+.controls-mobile button[title="Toggle sort order"]:hover {
     background: var(--color-primary) !important;
     color: white !important;
     transform: scale(1.05);
 }
 
-#presentations-list button[id*="resetFilters"] {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop button[id*="resetFilters"],
+.controls-mobile button[id*="resetFilters"] {
     background: var(--color-primary) !important;
     border-color: var(--color-primary) !important;
     color: white !important;
 }
 
-#presentations-list button[id*="resetFilters"]:hover {
+/* MODIFIED: Made selectors more specific */
+.controls-desktop button[id*="resetFilters"]:hover,
+.controls-mobile button[id*="resetFilters"]:hover {
     background: var(--color-primary-dark) !important;
     border-color: var(--color-primary-dark) !important;
 }

@@ -10,7 +10,7 @@ const presentationsData = [
         location: "Online",
         date: "2025-10-16",
         format: "oral",
-        status: "upcoming",
+        status: "completed",
         abstract: "",
         slides: "",
         video: "",
@@ -409,38 +409,36 @@ function generateControlsHTML() {
         <div style="
             background: white;
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem; 
             margin-bottom: 2rem;
             box-shadow: 0 4px 24px rgba(74, 144, 226, 0.08);
             border: 1px solid rgba(74, 144, 226, 0.06);
         ">
-            <!-- Main Controls Container -->
             <div style="
                 display: grid;
                 grid-template-columns: auto 1fr auto;
-                gap: 2rem;
+                gap: 1.5rem; 
                 align-items: start;
             " class="controls-desktop">
-                <!-- Sort Controls (Left) -->
                 <div style="min-width: 200px;">
                     <label style="
                         display: block;
-                        font-size: 0.8rem;
+                        font-size: 0.75rem; 
                         font-weight: 600;
                         color: #4A90E2;
                         text-transform: uppercase;
                         letter-spacing: 1px;
-                        margin-bottom: 0.5rem;
+                        margin-bottom: 0.4rem; 
                     ">Sort by</label>
                     <div style="display: flex; gap: 0.5rem;">
                         <select id="sortField" style="
                             flex: 1;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -451,7 +449,7 @@ function generateControlsHTML() {
                             <option value="title">Title</option>
                         </select>
                         <button id="sortOrder" style="
-                            padding: 0.6rem;
+                            padding: 0.5rem; 
                             border: 2px solid #4A90E2;
                             border-radius: 10px;
                             background: white;
@@ -459,7 +457,7 @@ function generateControlsHTML() {
                             cursor: pointer;
                             transition: all 0.3s ease;
                             font-weight: 500;
-                            min-width: 45px;
+                            min-width: 40px; 
                             font-size: 0.9rem;
                         " title="Toggle sort order">
                             ${currentSort.order === 'desc' ? '↓' : '↑'}
@@ -467,31 +465,29 @@ function generateControlsHTML() {
                     </div>
                 </div>
 
-                <!-- Filter Controls (Center) -->
                 <div style="
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
                     gap: 1.2rem;
                 ">
-                    <!-- Filter by Type -->
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Type</label>
                         <select id="filterType" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -505,25 +501,24 @@ function generateControlsHTML() {
                         </select>
                     </div>
 
-                    <!-- Filter by Status -->
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Status</label>
                         <select id="filterStatus" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -534,25 +529,24 @@ function generateControlsHTML() {
                         </select>
                     </div>
 
-                    <!-- Filter by Format -->
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Format</label>
                         <select id="filterFormat" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -564,23 +558,22 @@ function generateControlsHTML() {
                     </div>
                 </div>
 
-                <!-- Reset Button (Right) -->
                 <div style="min-width: 120px;">
                     <label style="
                         display: block;
-                        font-size: 0.8rem;
+                        font-size: 0.75rem; 
                         font-weight: 600;
                         color: transparent;
-                        margin-bottom: 0.5rem;
+                        margin-bottom: 0.4rem; 
                     ">Reset</label>
                     <button id="resetFilters" style="
                         width: 100%;
-                        padding: 0.6rem 1rem;
+                        padding: 0.5rem 0.8rem; 
                         background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
                         color: white;
                         border: none;
                         border-radius: 10px;
-                        font-size: 0.8rem;
+                        font-size: 0.75rem; 
                         font-weight: 600;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
@@ -592,7 +585,6 @@ function generateControlsHTML() {
                 </div>
             </div>
 
-            <!-- Mobile Layout -->
             <div style="display: none;" class="controls-mobile">
                 <div style="
                     display: grid;
@@ -600,26 +592,25 @@ function generateControlsHTML() {
                     gap: 1rem;
                     margin-bottom: 1rem;
                 ">
-                    <!-- Sort Controls -->
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Sort</label>
                         <div style="display: flex; gap: 0.5rem;">
                             <select id="sortField-mobile" style="
                                 flex: 1;
-                                padding: 0.6rem 0.8rem;
+                                padding: 0.5rem 0.7rem; 
                                 border: 2px solid #E2E8F0;
                                 border-radius: 10px;
                                 background: white;
                                 color: #4A5568;
-                                font-size: 0.85rem;
+                                font-size: 0.8rem; 
                                 font-weight: 500;
                                 transition: all 0.3s ease;
                                 cursor: pointer;
@@ -630,7 +621,7 @@ function generateControlsHTML() {
                                 <option value="title">Title</option>
                             </select>
                             <button id="sortOrder-mobile" style="
-                                padding: 0.6rem;
+                                padding: 0.5rem; 
                                 border: 2px solid #4A90E2;
                                 border-radius: 10px;
                                 background: white;
@@ -638,30 +629,29 @@ function generateControlsHTML() {
                                 cursor: pointer;
                                 transition: all 0.3s ease;
                                 font-weight: 500;
-                                min-width: 45px;
+                                min-width: 40px; 
                             " title="Toggle sort order">
                                 ${currentSort.order === 'desc' ? '↓' : '↑'}
                             </button>
                         </div>
                     </div>
 
-                    <!-- Reset Button -->
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: transparent;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Reset</label>
                         <button id="resetFilters-mobile" style="
                             width: 100%;
-                            padding: 0.6rem 1rem;
+                            padding: 0.5rem 0.8rem; 
                             background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
                             color: white;
                             border: none;
                             border-radius: 10px;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             text-transform: uppercase;
                             letter-spacing: 0.5px;
@@ -673,7 +663,6 @@ function generateControlsHTML() {
                     </div>
                 </div>
 
-                <!-- Filter Controls -->
                 <div style="
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -682,21 +671,21 @@ function generateControlsHTML() {
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Type</label>
                         <select id="filterType-mobile" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -713,21 +702,21 @@ function generateControlsHTML() {
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Status</label>
                         <select id="filterStatus-mobile" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -741,21 +730,21 @@ function generateControlsHTML() {
                     <div>
                         <label style="
                             display: block;
-                            font-size: 0.8rem;
+                            font-size: 0.75rem; 
                             font-weight: 600;
                             color: #4A90E2;
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            margin-bottom: 0.5rem;
+                            margin-bottom: 0.4rem; 
                         ">Format</label>
                         <select id="filterFormat-mobile" style="
                             width: 100%;
-                            padding: 0.6rem 0.8rem;
+                            padding: 0.5rem 0.7rem; 
                             border: 2px solid #E2E8F0;
                             border-radius: 10px;
                             background: white;
                             color: #4A5568;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem; 
                             font-weight: 500;
                             transition: all 0.3s ease;
                             cursor: pointer;
@@ -768,17 +757,15 @@ function generateControlsHTML() {
                 </div>
             </div>
 
-            <!-- Results Counter -->
             <div id="resultsCounter" style="
-                margin-top: 1.5rem;
-                padding-top: 1.5rem;
+                margin-top: 1rem; 
+                padding-top: 1rem; 
                 border-top: 1px solid #E2E8F0;
-                font-size: 0.9rem;
+                font-size: 0.85rem; 
                 color: #718096;
                 text-align: center;
             "></div>
 
-            <!-- Responsive CSS -->
             <style>
                 @media (max-width: 768px) {
                     .controls-desktop { display: none !important; }
@@ -828,37 +815,41 @@ function generatePresentationsHTML() {
             // Generate buttons based on available materials
             let buttons = [];
             
+            // Slides button
             if (presentation.slides && presentation.slides !== '#') {
                 buttons.push(`<a href="${presentation.slides}" class="pub-btn" target="_blank" rel="noopener">Slides</a>`);
             } else if (presentation.slides === '#') {
                 buttons.push(`<a href="#" class="pub-btn" target="_blank" rel="noopener">Slides</a>`);
             }
             
+            // Poster button
             if (presentation.poster && presentation.poster !== '#') {
                 buttons.push(`<a href="${presentation.poster}" class="pub-btn" target="_blank" rel="noopener">Poster</a>`);
             } else if (presentation.poster === '#') {
                 buttons.push(`<a href="#" class="pub-btn" target="_blank" rel="noopener">Poster</a>`);
             }
             
-            if (presentation.video && presentation.video !== '#') {
-                buttons.push(`<a href="${presentation.video}" class="pub-btn video-btn" target="_blank" rel="noopener">Video</a>`);
-            }
-            
+            // Abstract button
             if (presentation.abstract) {
                 buttons.push(`<button class="pub-btn" onclick="openAbstract(${originalIndex})">Abstract</button>`);
             }
             
-            const buttonsHtml = buttons.length > 0 ? buttons.join('\n                        ') : '';
+            // Video button
+            if (presentation.video && presentation.video !== '#') {
+                buttons.push(`<a href="${presentation.video}" class="pub-btn video-btn" target="_blank" rel="noopener">Video</a>`);
+            }
+            
+            const buttonsHtml = buttons.length > 0 ? buttons.join(' ') : '';
             
             return `
                 <div class="publication-item presentation-item">
-                    <div class="publication-icon" style="color: ${typeInfo.color};">
+                    <div class="publication-icon">
                         ${typeIcon}
                     </div>
                     <div class="publication-content">
                         <div class="publication-main">
                             <div class="presentation-header" style="display: flex; align-items: center; margin-bottom: 0.3rem;">
-                                <span class="presentation-type" style="color: ${typeInfo.color}; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                <span class="presentation-type">
                                     ${typeInfo.label}
                                 </span>
                                 ${statusBadge}
