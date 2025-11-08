@@ -18,7 +18,7 @@ let currentImageIndex = 0;
 let imageInterval;
 const IMAGE_CHANGE_INTERVAL = 4000; // 4 seconds
 
-// --- ナビゲーションロジック (フッター参照を削除) ---
+// --- ナビゲーションロジック ---
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const headerNavLinks = document.querySelectorAll('.nav-link');
     const pageSections = document.querySelectorAll('.page-content');
     const langToggle = document.getElementById('langToggle');
+    const profilePhotoContainer = document.querySelector('.profile-photo');
+    const mainTitle = document.getElementById('mainTitle'); // ★ <h1>タグのIDを取得
 
     // --- 1. スムーススクロール機能 ---
     allNavLinks.forEach(link => {
@@ -52,6 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // --- 4. タイトルクリックでトップへ戻る機能 ---
+    if (mainTitle) {
+        mainTitle.style.cursor = 'pointer'; // カーソルを変更
+        mainTitle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const homeElement = document.getElementById('home');
+            if (homeElement) {
+                homeElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                updateActiveNavLinks('home'); // ナビゲーションをHomeに更新
+                startImageSlideshow(); // スライドショーを再開
+            }
+        });
+    }
 
     // --- 2. スクロールスパイ (IntersectionObserver) ---
     const observerOptions = {
@@ -88,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     
-    // --- (ここから下は既存の機能) ---
+    // --- 言語切り替え機能 (既存) ---
 
     // Language toggle functionality
     if (langToggle) {
@@ -142,16 +160,27 @@ document.addEventListener('DOMContentLoaded', function() {
         startImageSlideshow();
     }
 
-    // Pause slideshow when user hovers over the image
-    const profilePhotoContainer = document.querySelector('.profile-photo');
+    // --- 画像スライドショーの操作性向上 ---
     if (profilePhotoContainer) {
+        profilePhotoContainer.style.cursor = 'pointer'; // クリック可能なことを示すカーソル
+        
+        // 画像をクリックして次の画像に切り替える機能を追加
+        profilePhotoContainer.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % profileImages.length;
+            updateCurrentImage();
+            // クリックで手動で切り替えた後、自動スライドショーのタイミングをリセット
+            if (imageInterval) {
+                startImageSlideshow();
+            }
+        });
+        
+        // Pause slideshow when user hovers over the image (既存)
         profilePhotoContainer.addEventListener('mouseenter', () => {
             stopImageSlideshow();
         });
 
         profilePhotoContainer.addEventListener('mouseleave', () => {
             // 現在 'home' セクションがアクティブ（表示）されているかチェック
-            const homeSection = document.getElementById('home');
             const navHome = document.querySelector('.nav-link[data-page="home"]');
             
             // homeセクションがアクティブな場合のみスライドショーを再開
@@ -174,41 +203,37 @@ function initializeImageSlideshow() {
     // Clear existing content
     profilePhotoContainer.innerHTML = '';
 
-    // Create images
+    // Create image elements (now wrapped in <picture>)
     profileImages.forEach((imageSrc, index) => {
+        const picture = document.createElement('picture');
+        
+        // WebP形式の <source> タグを推奨 (WebP画像が用意できている場合)
+        // const webpSource = document.createElement('source');
+        // webpSource.srcset = imageSrc.replace(/\.(jpe?g|png)$/i, '.webp'); // 拡張子をWebPに置換
+        // webpSource.type = 'image/webp';
+        // picture.appendChild(webpSource);
+        
         const img = document.createElement('img');
         img.src = imageSrc;
         img.alt = `Profile photo ${index + 1}`;
+        img.setAttribute('loading', 'lazy'); // 遅延読み込み
         
+        // 最初の画像のみ表示、残りは非表示
         img.style.opacity = index === 0 ? '1' : '0';
         img.style.zIndex = index === 0 ? '2' : '1'; 
+        img.style.transition = 'opacity 0.5s ease-in-out'; // フェードイン/アウトの追加
 
         img.addEventListener('error', function() {
             console.warn(`Failed to load image: ${imageSrc}`);
             // Hide this image if it fails to load
-            this.style.display = 'none';
+            picture.style.display = 'none';
         });
-        profilePhotoContainer.appendChild(img);
+        
+        picture.appendChild(img);
+        profilePhotoContainer.appendChild(picture);
     });
 
-    // ★★★ 変更点: ナビゲーションドットの生成コードを削除 ★★★
-    /*
-    // Create navigation dots
-    if (profileImages.length > 1) {
-        const navContainer = document.createElement('div');
-        navContainer.className = 'image-nav';
-
-        profileImages.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = `nav-dot ${index === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => goToImage(index));
-            navContainer.appendChild(dot);
-        });
-
-        profilePhotoContainer.appendChild(navContainer);
-    }
-    */
-    // ★★★ 変更点ここまで ★★★
+    // ナビゲーションドットの生成コードは削除
 }
 
 function startImageSlideshow() {
@@ -229,32 +254,17 @@ function stopImageSlideshow() {
     }
 }
 
-// ★★★ 変更点: goToImage関数を削除 (ドットからしか呼ばれないため) ★★★
-/*
-function goToImage(index) {
-    if (index === currentImageIndex) return;
-    
-    currentImageIndex = index;
-    updateCurrentImage();
-    
-    // Restart the interval to reset the timing
-    if (imageInterval) {
-        startImageSlideshow();
-    }
-}
-*/
-// ★★★ 変更点ここまで ★★★
-
-
 function updateCurrentImage() {
     const profilePhotoContainer = document.querySelector('.profile-photo');
     if (!profilePhotoContainer) return;
 
-    const images = profilePhotoContainer.querySelectorAll('img');
-    // const dots = profilePhotoContainer.querySelectorAll('.nav-dot'); // ★★★ 変更点: 削除
+    // 画像は <picture> タグの中にあるため、<picture> から <img> を探す
+    const pictures = profilePhotoContainer.querySelectorAll('picture');
 
-    // Update images
-    images.forEach((img, index) => {
+    pictures.forEach((picture, index) => {
+        const img = picture.querySelector('img');
+        if (!img) return;
+
         if (index === currentImageIndex) {
             img.style.opacity = '1';
             img.style.zIndex = '2';
@@ -264,16 +274,5 @@ function updateCurrentImage() {
         }
     });
 
-    // ★★★ 変更点: ドット更新処理を削除 ★★★
-    /*
-    // Update navigation dots
-    dots.forEach((dot, index) => {
-        if (index === currentImageIndex) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
-    */
-    // ★★★ 変更点ここまで ★★★
+    // ナビゲーションドット更新処理は削除
 }
