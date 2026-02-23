@@ -20,8 +20,8 @@ const IMAGE_CHANGE_INTERVAL = 4000; // 4 seconds
 
 // --- ナビゲーションロジック ---
 
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function () {
+
     const allNavLinks = document.querySelectorAll('.nav-link');
     const headerNavLinks = document.querySelectorAll('.nav-link');
     const pageSections = document.querySelectorAll('.page-content');
@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. スムーススクロール機能 ---
     allNavLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            
+
             if (targetId && targetId.startsWith('#')) {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             }
-            
+
             const targetPage = this.getAttribute('data-page');
             updateActiveNavLinks(targetPage); // クリック直後の反応性のため
 
@@ -54,11 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // --- 4. タイトルクリックでトップへ戻る機能 ---
     if (mainTitle) {
         mainTitle.style.cursor = 'pointer'; // カーソルを変更
-        mainTitle.addEventListener('click', function(e) {
+        mainTitle.addEventListener('click', function (e) {
             e.preventDefault();
             const homeElement = document.getElementById('home');
             if (homeElement) {
@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    
+
     // --- 言語切り替え機能 (既存) ---
 
     // Language toggle functionality
     if (langToggle) {
-        langToggle.addEventListener('click', function() {
+        langToggle.addEventListener('click', function () {
             currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
             switchLanguage(currentLanguage);
             updateLanguageButton();
@@ -132,12 +132,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+
+        // Re-render presentations to apply language filter
+        if (typeof generatePresentationsHTML === 'function') {
+            generatePresentationsHTML();
+        }
     }
 
     function updateLanguageButton() {
         const langCurrent = document.querySelector('.lang-current');
         const langOther = document.querySelector('.lang-other');
-        
+
         if (currentLanguage === 'en') {
             langCurrent.textContent = 'EN';
             langOther.textContent = 'JA';
@@ -153,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize image slideshow
     initializeImageSlideshow();
-    
+
     // Start slideshow if on home page
     const homePage = document.getElementById('home');
     if (homePage && homePage.classList.contains('active')) {
@@ -163,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 画像スライドショーの操作性向上 ---
     if (profilePhotoContainer) {
         profilePhotoContainer.style.cursor = 'pointer'; // クリック可能なことを示すカーソル
-        
+
         // 画像をクリックして次の画像に切り替える機能を追加
         profilePhotoContainer.addEventListener('click', () => {
             currentImageIndex = (currentImageIndex + 1) % profileImages.length;
@@ -173,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 startImageSlideshow();
             }
         });
-        
+
         // Pause slideshow when user hovers over the image (既存)
         profilePhotoContainer.addEventListener('mouseenter', () => {
             stopImageSlideshow();
@@ -182,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         profilePhotoContainer.addEventListener('mouseleave', () => {
             // 現在 'home' セクションがアクティブ（表示）されているかチェック
             const navHome = document.querySelector('.nav-link[data-page="home"]');
-            
+
             // homeセクションがアクティブな場合のみスライドショーを再開
             if (navHome && navHome.classList.contains('active')) {
                 startImageSlideshow();
@@ -206,29 +211,29 @@ function initializeImageSlideshow() {
     // Create image elements (now wrapped in <picture>)
     profileImages.forEach((imageSrc, index) => {
         const picture = document.createElement('picture');
-        
+
         // WebP形式の <source> タグを推奨 (WebP画像が用意できている場合)
         // const webpSource = document.createElement('source');
         // webpSource.srcset = imageSrc.replace(/\.(jpe?g|png)$/i, '.webp'); // 拡張子をWebPに置換
         // webpSource.type = 'image/webp';
         // picture.appendChild(webpSource);
-        
+
         const img = document.createElement('img');
         img.src = imageSrc;
         img.alt = `Profile photo ${index + 1}`;
         img.setAttribute('loading', 'lazy'); // 遅延読み込み
-        
+
         // 最初の画像のみ表示、残りは非表示
         img.style.opacity = index === 0 ? '1' : '0';
-        img.style.zIndex = index === 0 ? '2' : '1'; 
+        img.style.zIndex = index === 0 ? '2' : '1';
         img.style.transition = 'opacity 0.5s ease-in-out'; // フェードイン/アウトの追加
 
-        img.addEventListener('error', function() {
+        img.addEventListener('error', function () {
             console.warn(`Failed to load image: ${imageSrc}`);
             // Hide this image if it fails to load
             picture.style.display = 'none';
         });
-        
+
         picture.appendChild(img);
         profilePhotoContainer.appendChild(picture);
     });
@@ -238,9 +243,9 @@ function initializeImageSlideshow() {
 
 function startImageSlideshow() {
     if (profileImages.length <= 1) return;
-    
+
     stopImageSlideshow(); // Clear any existing interval
-    
+
     imageInterval = setInterval(() => {
         currentImageIndex = (currentImageIndex + 1) % profileImages.length;
         updateCurrentImage();

@@ -243,11 +243,11 @@ let currentSort = {
 // Format author names for display (same as publications)
 function formatPresentationAuthors(authorString) {
     if (!authorString) return '';
-    
+
     try {
         // Split authors by comma or "and"
         const authors = authorString.split(/,| and /).map(author => author.trim());
-        
+
         // Make "Masahiro Hoshino" bold
         return authors.map(author => {
             if (author.includes('Masahiro Hoshino')) {
@@ -267,13 +267,13 @@ function formatPresentationAuthors(authorString) {
 // Format date for display
 function formatPresentationDate(dateString) {
     if (!dateString) return '';
-    
+
     try {
         const date = new Date(dateString);
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         };
         return date.toLocaleDateString('en-US', options);
     } catch (error) {
@@ -312,7 +312,7 @@ function getPresentationTypeIcon(type) {
             <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 7.5 8zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
         </svg>`
     };
-    
+
     return icons[type] || icons.internationalconference;
 }
 
@@ -325,7 +325,7 @@ function getPresentationTypeLabel(type) {
         workshop: { label: 'Workshop', color: '#F39C12' },
         invited: { label: 'Invited Talk', color: '#6B7280' }
     };
-    
+
     return types[type] || types.internationalconference;
 }
 
@@ -335,9 +335,9 @@ function getStatusBadge(status) {
         upcoming: { label: 'Upcoming', color: '#4A90E2', bg: 'rgba(74, 144, 226, 0.1)' },
         completed: { label: 'Completed', color: '#718096', bg: 'rgba(113, 128, 150, 0.1)' }
     };
-    
+
     const statusInfo = statuses[status] || statuses.completed;
-    
+
     return `<span style="
         display: inline-block;
         padding: 0.25rem 0.75rem;
@@ -352,27 +352,38 @@ function getStatusBadge(status) {
     ">${statusInfo.label}</span>`;
 }
 
+// Detect if a presentation is in Japanese (by checking title and venue for Japanese characters)
+function isPresentationJapanese(presentation) {
+    const jaRegex = /[\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uFF00-\uFFEF]/;
+    return jaRegex.test(presentation.title) || jaRegex.test(presentation.venue);
+}
+
 // Filter and sort presentations
 function filterAndSortPresentations() {
     let filtered = [...presentationsData];
-    
+
+    // Apply language filter: hide Japanese presentations when language is English
+    if (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') {
+        filtered = filtered.filter(p => !isPresentationJapanese(p));
+    }
+
     // Apply filters
     if (currentFilters.type !== 'all') {
         filtered = filtered.filter(p => p.type === currentFilters.type);
     }
-    
+
     if (currentFilters.status !== 'all') {
         filtered = filtered.filter(p => p.status === currentFilters.status);
     }
-    
+
     if (currentFilters.format !== 'all') {
         filtered = filtered.filter(p => p.format === currentFilters.format);
     }
-    
+
     // Apply sorting
     filtered.sort((a, b) => {
         let aValue, bValue;
-        
+
         switch (currentSort.field) {
             case 'date':
                 aValue = new Date(a.date);
@@ -394,12 +405,12 @@ function filterAndSortPresentations() {
                 aValue = new Date(a.date);
                 bValue = new Date(b.date);
         }
-        
+
         if (aValue < bValue) return currentSort.order === 'asc' ? -1 : 1;
         if (aValue > bValue) return currentSort.order === 'asc' ? 1 : -1;
         return 0;
     });
-    
+
     return filtered;
 }
 
@@ -787,15 +798,15 @@ function generatePresentationsHTML() {
         console.warn('Presentations container not found');
         return;
     }
-    
+
     // Generate controls
     const controlsHTML = generateControlsHTML();
-    
+
     // Get filtered and sorted presentations
     const filteredPresentations = filterAndSortPresentations();
-    
+
     let html = controlsHTML;
-    
+
     // Generate presentation items
     const presentationsListHTML = filteredPresentations.map((presentation, index) => {
         try {
@@ -804,43 +815,43 @@ function generatePresentationsHTML() {
             const typeIcon = getPresentationTypeIcon(presentation.type);
             const typeInfo = getPresentationTypeLabel(presentation.type);
             const statusBadge = getStatusBadge(presentation.status);
-            
+
             // Find original index for abstract modal
-            const originalIndex = presentationsData.findIndex(p => 
-                p.title === presentation.title && 
-                p.date === presentation.date && 
+            const originalIndex = presentationsData.findIndex(p =>
+                p.title === presentation.title &&
+                p.date === presentation.date &&
                 p.venue === presentation.venue
             );
-            
+
             // Generate buttons based on available materials
             let buttons = [];
-            
+
             // Slides button
             if (presentation.slides && presentation.slides !== '#') {
                 buttons.push(`<a href="${presentation.slides}" class="pub-btn" target="_blank" rel="noopener">Slides</a>`);
             } else if (presentation.slides === '#') {
                 buttons.push(`<a href="#" class="pub-btn" target="_blank" rel="noopener">Slides</a>`);
             }
-            
+
             // Poster button
             if (presentation.poster && presentation.poster !== '#') {
                 buttons.push(`<a href="${presentation.poster}" class="pub-btn" target="_blank" rel="noopener">Poster</a>`);
             } else if (presentation.poster === '#') {
                 buttons.push(`<a href="#" class="pub-btn" target="_blank" rel="noopener">Poster</a>`);
             }
-            
+
             // Abstract button
             if (presentation.abstract) {
                 buttons.push(`<button class="pub-btn" onclick="openAbstract(${originalIndex})">Abstract</button>`);
             }
-            
+
             // Video button
             if (presentation.video && presentation.video !== '#') {
                 buttons.push(`<a href="${presentation.video}" class="pub-btn video-btn" target="_blank" rel="noopener">Video</a>`);
             }
-            
+
             const buttonsHtml = buttons.length > 0 ? buttons.join(' ') : '';
-            
+
             return `
                 <div class="publication-item presentation-item">
                     <div class="publication-icon">
@@ -872,14 +883,14 @@ function generatePresentationsHTML() {
             return '';
         }
     }).join('');
-    
+
     html += `<div class="presentations-list-content">${presentationsListHTML}</div>`;
-    
+
     presentationsContainer.innerHTML = html;
-    
+
     // Update results counter
     updateResultsCounter(filteredPresentations.length);
-    
+
     // Add event listeners
     addControlEventListeners();
 }
@@ -888,8 +899,17 @@ function generatePresentationsHTML() {
 function updateResultsCounter(count) {
     const counter = document.getElementById('resultsCounter');
     if (counter) {
-        const total = presentationsData.length;
-        counter.textContent = `Showing ${count} of ${total} presentations`;
+        // Calculate total based on language filter
+        let total = presentationsData.length;
+        if (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') {
+            total = presentationsData.filter(p => !isPresentationJapanese(p)).length;
+        }
+
+        if (typeof currentLanguage !== 'undefined' && currentLanguage === 'ja') {
+            counter.textContent = `${total}件中 ${count}件を表示`;
+        } else {
+            counter.textContent = `Showing ${count} of ${total} presentations`;
+        }
     }
 }
 
@@ -899,7 +919,7 @@ function addControlEventListeners() {
     function addListenersToBoth(desktopId, mobileId, eventType, handler) {
         const desktopElement = document.getElementById(desktopId);
         const mobileElement = document.getElementById(mobileId);
-        
+
         if (desktopElement) {
             desktopElement.addEventListener(eventType, handler);
         }
@@ -907,12 +927,12 @@ function addControlEventListeners() {
             mobileElement.addEventListener(eventType, handler);
         }
     }
-    
+
     // Helper function to set values for both desktop and mobile elements
     function setValueForBoth(desktopId, mobileId, value) {
         const desktopElement = document.getElementById(desktopId);
         const mobileElement = document.getElementById(mobileId);
-        
+
         if (desktopElement) {
             desktopElement.value = value;
         }
@@ -920,48 +940,48 @@ function addControlEventListeners() {
             mobileElement.value = value;
         }
     }
-    
+
     // Sort field change
     setValueForBoth('sortField', 'sortField-mobile', currentSort.field);
     addListenersToBoth('sortField', 'sortField-mobile', 'change', (e) => {
         currentSort.field = e.target.value;
         generatePresentationsHTML();
     });
-    
+
     // Sort order toggle
     addListenersToBoth('sortOrder', 'sortOrder-mobile', 'click', () => {
         currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
         generatePresentationsHTML();
     });
-    
+
     // Filter type
     setValueForBoth('filterType', 'filterType-mobile', currentFilters.type);
     addListenersToBoth('filterType', 'filterType-mobile', 'change', (e) => {
         currentFilters.type = e.target.value;
         generatePresentationsHTML();
     });
-    
+
     // Filter status
     setValueForBoth('filterStatus', 'filterStatus-mobile', currentFilters.status);
     addListenersToBoth('filterStatus', 'filterStatus-mobile', 'change', (e) => {
         currentFilters.status = e.target.value;
         generatePresentationsHTML();
     });
-    
+
     // Filter format
     setValueForBoth('filterFormat', 'filterFormat-mobile', currentFilters.format);
     addListenersToBoth('filterFormat', 'filterFormat-mobile', 'change', (e) => {
         currentFilters.format = e.target.value;
         generatePresentationsHTML();
     });
-    
+
     // Reset filters
     addListenersToBoth('resetFilters', 'resetFilters-mobile', 'click', () => {
         currentFilters = { type: 'all', status: 'all', format: 'all' };
         currentSort = { field: 'date', order: 'desc' };
         generatePresentationsHTML();
     });
-    
+
     // Add hover effects for select elements
     const selects = document.querySelectorAll('select');
     selects.forEach(select => {
@@ -980,7 +1000,7 @@ function addControlEventListeners() {
             select.style.boxShadow = 'none';
         });
     });
-    
+
     // Add hover effects for buttons
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
@@ -1009,7 +1029,7 @@ function addControlEventListeners() {
 // Open abstract modal (unchanged)
 function openAbstract(index) {
     const presentation = presentationsData[index];
-    
+
     // Create modal
     const modal = document.createElement('div');
     modal.style.cssText = `
@@ -1025,7 +1045,7 @@ function openAbstract(index) {
         z-index: 1000;
         backdrop-filter: blur(3px);
     `;
-    
+
     const modalContent = document.createElement('div');
     modalContent.style.cssText = `
         background: white;
@@ -1038,9 +1058,9 @@ function openAbstract(index) {
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         position: relative;
     `;
-    
+
     const typeInfo = getPresentationTypeLabel(presentation.type);
-    
+
     modalContent.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
             <div>
@@ -1079,10 +1099,10 @@ function openAbstract(index) {
             ${presentation.abstract}
         </div>
     `;
-    
+
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
-    
+
     // Add event listeners
     const closeModal = () => {
         modal.style.opacity = '0';
@@ -1092,13 +1112,13 @@ function openAbstract(index) {
             }
         }, 300);
     };
-    
+
     // Close modal events
     document.getElementById('closeModal').addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
-    
+
     // Animate modal in
     modal.style.opacity = '0';
     modal.style.transform = 'scale(0.9)';
@@ -1110,7 +1130,7 @@ function openAbstract(index) {
 }
 
 // Initialize presentations when this script loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Generate presentations immediately
     try {
         generatePresentationsHTML();
