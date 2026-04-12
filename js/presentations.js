@@ -340,15 +340,16 @@ function getStatusBadge(status) {
 
     return `<span style="
         display: inline-block;
-        padding: 0.25rem 0.75rem;
-        font-size: 0.75rem;
+        padding: 1px 5px;
+        font-size: 0.58rem;
         font-weight: 600;
         color: ${statusInfo.color};
         background: ${statusInfo.bg};
-        border-radius: 16px;
+        border-radius: 2px;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-left: 0.75rem;
+        letter-spacing: 0.3px;
+        margin-left: 0.4rem;
+        line-height: 1.5;
     ">${statusInfo.label}</span>`;
 }
 
@@ -417,7 +418,7 @@ function filterAndSortPresentations() {
 // Generate filter and sort controls
 function generateControlsHTML() {
     return `
-        <div style="
+        <div class="presentations-controls" style="
             background: white;
             border-radius: 16px;
             padding: 1.5rem; 
@@ -859,22 +860,19 @@ function generatePresentationsHTML() {
                     </div>
                     <div class="publication-content">
                         <div class="publication-main">
-                            <div class="presentation-header" style="display: flex; align-items: center; margin-bottom: 0.3rem;">
+                            <div class="presentation-header" style="display: flex; align-items: center; margin-bottom: 0.2rem;">
                                 <span class="presentation-type">
                                     ${typeInfo.label}
                                 </span>
                                 ${statusBadge}
                             </div>
-                            <div class="publication-title" style="margin: 0 0 0.3rem 0; line-height: 1.3;">${presentation.title}</div>
-                            <div class="publication-authors" style="margin-bottom: 0.2rem; font-size: 0.9rem;">${authors}</div>
-                            <div class="presentation-details" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; color: #718096; font-size: 0.85rem;">
-                                <span>${presentation.venue}${presentation.location ? `, ${presentation.location}` : ''}</span>
-                                <span>•</span>
-                                <span>${formattedDate}</span>
-                                ${presentation.format ? `<span>•</span><span>${presentation.format.charAt(0).toUpperCase() + presentation.format.slice(1)}</span>` : ''}
+                            <div class="publication-title" style="margin: 0 0 0.15rem 0; line-height: 1.3;">${presentation.title}</div>
+                            <div class="publication-authors" style="margin-bottom: 0.1rem; font-size: 0.8rem;">${authors}</div>
+                            <div class="presentation-details" style="color: #718096; font-size: 0.75rem; line-height: 1.45;">
+                                ${presentation.venue}${presentation.location ? `, ${presentation.location}` : ''} · ${formattedDate}${presentation.format ? ` · ${presentation.format.charAt(0).toUpperCase() + presentation.format.slice(1)}` : ''}
                             </div>
                         </div>
-                        ${buttonsHtml ? `<div class="publication-buttons" style="margin-top: 0.8rem;">${buttonsHtml}</div>` : ''}
+                        ${buttonsHtml ? `<div class="publication-buttons" style="margin-top: 0.5rem;">${buttonsHtml}</div>` : ''}
                     </div>
                 </div>
             `;

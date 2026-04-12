@@ -24,10 +24,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const allNavLinks = document.querySelectorAll('.nav-link');
     const headerNavLinks = document.querySelectorAll('.nav-link');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     const pageSections = document.querySelectorAll('.page-content');
     const langToggle = document.getElementById('langToggle');
     const profilePhotoContainer = document.querySelector('.profile-photo');
     const mainTitle = document.getElementById('mainTitle'); // ★ <h1>タグのIDを取得
+
+    // --- Hamburger menu ---
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+
+    if (hamburgerBtn && mobileDrawer) {
+        hamburgerBtn.addEventListener('click', function () {
+            hamburgerBtn.classList.toggle('active');
+            mobileDrawer.classList.toggle('open');
+        });
+
+        // Close drawer when a mobile nav link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                hamburgerBtn.classList.remove('active');
+                mobileDrawer.classList.remove('open');
+
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+
+                const targetPage = this.getAttribute('data-page');
+                updateActiveNavLinks(targetPage);
+
+                if (targetPage === 'home') {
+                    startImageSlideshow();
+                } else {
+                    stopImageSlideshow();
+                }
+            });
+        });
+
+        // Close drawer when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!hamburgerBtn.contains(e.target) && !mobileDrawer.contains(e.target)) {
+                hamburgerBtn.classList.remove('active');
+                mobileDrawer.classList.remove('open');
+            }
+        });
+    }
 
     // --- 1. スムーススクロール機能 ---
     allNavLinks.forEach(link => {
@@ -97,6 +143,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateActiveNavLinks(targetPage) {
         // ヘッダーナビ
         headerNavLinks.forEach(nl => {
+            if (nl.getAttribute('data-page') === targetPage) {
+                nl.classList.add('active');
+            } else {
+                nl.classList.remove('active');
+            }
+        });
+        // モバイルナビ
+        mobileNavLinks.forEach(nl => {
             if (nl.getAttribute('data-page') === targetPage) {
                 nl.classList.add('active');
             } else {

@@ -39,34 +39,55 @@
                     of Physics, University of Tokyo</p>
             </div>
 
-            <nav>
-                <div class="nav-container">
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a href="#home" class="nav-link active" data-page="home" data-en="Home"
-                                data-ja="ホーム">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#publication" class="nav-link" data-page="publication" data-en="Publication"
-                                data-ja="論文">Publication</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#presentation" class="nav-link" data-page="presentation" data-en="Presentation"
-                                data-ja="発表">Presentation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#cv" class="nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div class="header-right">
+                <nav>
+                    <div class="nav-container">
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="#home" class="nav-link active" data-page="home" data-en="Home"
+                                    data-ja="ホーム">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#publication" class="nav-link" data-page="publication" data-en="Publication"
+                                    data-ja="論文">Publication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#presentation" class="nav-link" data-page="presentation" data-en="Presentation"
+                                    data-ja="発表">Presentation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#cv" class="nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
-            <div class="language-toggle">
-                <button id="langToggle" class="lang-btn">
-                    <span class="lang-current">EN</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-other">JA</span>
+                <div class="language-toggle">
+                    <button id="langToggle" class="lang-btn">
+                        <span class="lang-current">EN</span>
+                        <span class="lang-divider">|</span>
+                        <span class="lang-other">JA</span>
+                    </button>
+                </div>
+
+                <button id="hamburgerBtn" class="hamburger-btn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
                 </button>
+            </div>
+
+            <!-- Mobile drawer menu -->
+            <div id="mobileDrawer" class="mobile-drawer">
+                <ul class="mobile-nav-list">
+                    <li><a href="#home" class="mobile-nav-link" data-page="home" data-en="Home" data-ja="ホーム">Home</a>
+                    </li>
+                    <li><a href="#publication" class="mobile-nav-link" data-page="publication" data-en="Publication"
+                            data-ja="論文">Publication</a></li>
+                    <li><a href="#presentation" class="mobile-nav-link" data-page="presentation" data-en="Presentation"
+                            data-ja="発表">Presentation</a></li>
+                    <li><a href="#cv" class="mobile-nav-link" data-page="cv" data-en="CV" data-ja="経歴">CV</a></li>
+                </ul>
             </div>
         </div>
     </header>
@@ -97,7 +118,8 @@
                                     data-ja="キーワード: 共形場理論、エンタングルメント、マジック">Keywords: conformal field theory,
                                     entanglement, quantum magic</p>
 
-                                <p data-en="I belong to the Ashida group." data-ja="東京大学の蘆田研究室に所属しています。">I belong to the
+                                <p data-en="I belong to the Ashida group." data-ja="東京大学理学系研究科の蘆田研究室に所属しています。">I belong
+                                    to the
                                     Ashida group.</p>
 
                                 <p data-en="I am a geek for coffee and red pandas." data-ja="趣味はコーヒーとレッサーパンダです。">I am a
@@ -276,18 +298,16 @@
                                     <div class="cv-text"
                                         data-en="Doctoral Course at Graduate School of Science, The University of Tokyo"
                                         data-ja="東京大学大学院 理学系研究科 物理学専攻 博士課程">Doctoral Course at Graduate School of
-                                        Science,
-                                        The University of Tokyo</div>
+                                        Science, The University of Tokyo</div>
                                 </div>
 
                                 <div class="cv-item">
                                     <div class="cv-date" data-en="2024-4-1 - 2026-3-31"
-                                        data-ja="2024年4月1日 - 2026年3月31日">2024-4-1
-                                        - 2026-3-31</div>
+                                        data-ja="2024年4月1日 - 2026年3月31日">2024-4-1 - 2026-3-31</div>
                                     <div class="cv-text"
-                                        data-en="Master Course at Graduate School of Science, The University of Tokyo"
-                                        data-ja="東京大学大学院 理学系研究科 物理学専攻 修士課程">Master Course at Graduate School of Science,
-                                        The University of Tokyo</div>
+                                        data-en="M.Sc. in Physics, Graduate School of Science, The University of Tokyo"
+                                        data-ja="東京大学大学院 理学系研究科 物理学専攻 修士課程">M.Sc. in Physics, Graduate School of
+                                        Science, The University of Tokyo</div>
                                 </div>
 
                                 <div class="cv-item">
@@ -316,15 +336,15 @@
                                 Scholarship / Grant</h2>
                             <div class="cv-items-container">
                                 <div class="cv-item">
-                                    <div class="cv-date" data-en="2026-4-1 - current" data-ja="2026年4月1日 - 現在">2026-4-1
-                                        - current</div>
+                                    <div class="cv-date" data-en="2026-4-1 - 2029-3-31"
+                                        data-ja="2026年4月1日 - 2029年3月31日">2026-4-1 - 2029-3-31</div>
                                     <div class="cv-text" data-en="JSPS Research Fellowship for Young Scientists (DC1)"
                                         data-ja="日本学術振興会特別研究員（DC1）">JSPS Research Fellowship for Young Scientists (DC1)
                                     </div>
                                 </div>
                                 <div class="cv-item">
-                                    <div class="cv-date" data-en="2026-4-1 - current" data-ja="2026年4月1日 - 現在">2026-4-1
-                                        - current</div>
+                                    <div class="cv-date" data-en="2026-4-1 - 2029-3-31"
+                                        data-ja="2026年4月1日 - 2029年3月31日">2026-4-1 - 2029-3-31</div>
                                     <div class="cv-text" data-en="JSR Fellowship" data-ja="JSRフェローシップ">JSR Fellowship
                                     </div>
                                 </div>
@@ -342,8 +362,8 @@
                                         data-ja="林レオロジー記念財団 奨学生">Hayashi Rheology foundation scholarship</div>
                                 </div>
                                 <div class="cv-item">
-                                    <div class="cv-date" data-en="2024-4-1 - current" data-ja="2024年4月1日 - 現在">2024-4-1
-                                        - current</div>
+                                    <div class="cv-date" data-en="2024-4-1 - 2029-3-31"
+                                        data-ja="2024年4月1日 - 2029年3月31日">2024-4-1 - 2029-3-31</div>
                                     <div class="cv-text"
                                         data-en="The Forefront Physics and Mathematics Program to Drive Transformation (FoPM) RA"
                                         data-ja="変革を駆動する先端物理・数学プログラム 卓越RA">The Forefront Physics and Mathematics Program
@@ -382,8 +402,8 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p data-en="&copy; 2025 Masahiro Hoshino. All rights reserved."
-                    data-ja="&copy; 2025 Masahiro Hoshino. All rights reserved.">&copy; 2025 Masahiro Hoshino. All
+                <p data-en="&copy; 2026 Masahiro Hoshino. All rights reserved."
+                    data-ja="&copy; 2026 Masahiro Hoshino. All rights reserved.">&copy; 2026 Masahiro Hoshino. All
                     rights reserved.</p>
             </div>
         </div>
