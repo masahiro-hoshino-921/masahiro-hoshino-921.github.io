@@ -10,7 +10,9 @@ const profileImages = [
     'images/marimo.jpg',
     'images/ruka.jpg',
     'images/ichigo.jpg',
-    'images/keiko.jpg'
+    'images/keiko.jpg',
+    'images/hama.jpg',
+    'images/mametaro.jpg'
     // Add more image paths as needed
 ];
 
