@@ -3,6 +3,7 @@ let currentLanguage = 'en';
 
 // Image slideshow configuration
 const profileImages = [
+    'images/hama.jpg',
     'images/ruka_2.jpg',
     'images/nozomu.jpg',
     'images/rukarin.jpg',
@@ -11,7 +12,6 @@ const profileImages = [
     'images/ruka.jpg',
     'images/ichigo.jpg',
     'images/keiko.jpg',
-    'images/hama.jpg',
     'images/mametaro.jpg'
     // Add more image paths as needed
 ];
