@@ -2,6 +2,17 @@
 
 // Publications data in BibTeX format
 const publicationsDataBibTeX = [
+    `@unpublished{matsuda2026quantum,
+    title = {Quantum Computational Resources and Conformal Field Theory: Unifying Spins, Bosons, and Fermions},
+    author = {Matsuda, Ryota and Hoshino, Masahiro and Ashida, Yuto},
+    year = 2026,
+    number = {arXiv:2607.05343},
+    eprint = {2607.05343},
+    primaryclass = {quant-ph},
+    publisher = {arXiv},
+    doi = {10.48550/arXiv.2607.05343},
+    pdf = {https://arxiv.org/pdf/2607.05343}
+}`,
     `@article{hoshino2026stabilizera,
     title = {Stabilizer Rényi Entropy Encodes Fusion Rules of Topological Defects and Boundaries},
     author = {Hoshino, Masahiro and Ashida, Yuto},
@@ -364,9 +375,18 @@ function generatePublicationsHTML() {
     publicationsContainer.innerHTML = html;
 }
 
-// Citation function - shows original BibTeX
+// Remove website-only fields from the BibTeX shown to users
+function getCitationBibTeX(bibtexString) {
+    return bibtexString
+        .split('\n')
+        .filter(line => !/^\s*pdf\s*=/i.test(line))
+        .join('\n')
+        .replace(/,(\s*\n\})$/, '$1');
+}
+
+// Citation function - shows citation-ready BibTeX
 function openCitation(index) {
-    const bibtex = publicationsDataBibTeX[index];
+    const bibtex = getCitationBibTeX(publicationsDataBibTeX[index]);
 
     // Create modal
     const modal = document.createElement('div');
@@ -391,7 +411,7 @@ function openCitation(index) {
         background: #ffffff;
         border-radius: 3px;
         padding: 1.5rem;
-        max-width: 640px;
+        max-width: 900px;
         width: 92%;
         max-height: 80vh;
         overflow-y: auto;
