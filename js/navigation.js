@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hamburgerBtn.addEventListener('click', function () {
             hamburgerBtn.classList.toggle('active');
             mobileDrawer.classList.toggle('open');
+            hamburgerBtn.setAttribute('aria-expanded', mobileDrawer.classList.contains('open') ? 'true' : 'false');
         });
 
         // Close drawer when a mobile nav link is clicked
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
                 hamburgerBtn.classList.remove('active');
                 mobileDrawer.classList.remove('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
 
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId.startsWith('#')) {
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!hamburgerBtn.contains(e.target) && !mobileDrawer.contains(e.target)) {
                 hamburgerBtn.classList.remove('active');
                 mobileDrawer.classList.remove('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
             }
         });
     }
@@ -236,6 +239,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        profilePhotoContainer.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                profilePhotoContainer.click();
+            }
+        });
+
         // Pause slideshow when user hovers over the image (既存)
         profilePhotoContainer.addEventListener('mouseenter', () => {
             stopImageSlideshow();
@@ -277,8 +287,11 @@ function initializeImageSlideshow() {
 
         const img = document.createElement('img');
         img.src = imageSrc;
-        img.alt = `Profile photo ${index + 1}`;
-        img.setAttribute('loading', 'lazy'); // 遅延読み込み
+        img.alt = `Red panda photograph ${index + 1}`;
+        img.setAttribute('loading', index === 0 ? 'eager' : 'lazy');
+        if (index === 0) {
+            img.setAttribute('fetchpriority', 'high');
+        }
 
         // 最初の画像のみ表示、残りは非表示
         img.style.opacity = index === 0 ? '1' : '0';
