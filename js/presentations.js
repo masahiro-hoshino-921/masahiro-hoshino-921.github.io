@@ -1050,7 +1050,7 @@ function openAbstract(index) {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(16, 47, 51, 0.58);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1060,14 +1060,14 @@ function openAbstract(index) {
 
     const modalContent = document.createElement('div');
     modalContent.style.cssText = `
-        background: white;
+        background: #fffdfa;
         border-radius: 16px;
         padding: 2rem;
         max-width: 700px;
         width: 90%;
         max-height: 80vh;
         overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 24px 64px rgba(16, 47, 51, 0.24);
         position: relative;
     `;
 
@@ -1079,7 +1079,7 @@ function openAbstract(index) {
                 <div style="color: ${typeInfo.color}; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">
                     ${typeInfo.label} Abstract
                 </div>
-                <h2 style="color: #2D3748; font-size: 1.3rem; margin: 0; line-height: 1.4;">${presentation.title}</h2>
+                <h2 style="color: #102f33; font-size: 1.5rem; margin: 0; line-height: 1.35; font-family: 'Newsreader', 'Noto Serif JP', Georgia, serif; font-weight: 500;">${presentation.title}</h2>
             </div>
             <button id="closeModal" style="
                 background: none;
@@ -1097,17 +1097,17 @@ function openAbstract(index) {
                 transition: all 0.3s ease;
                 flex-shrink: 0;
                 margin-left: 1rem;
-            " onmouseover="this.style.background='#F7FAFC'; this.style.color='#4A5568';" onmouseout="this.style.background='none'; this.style.color='#A0AEC0';">×</button>
+            " onmouseover="this.style.background='#f5f2eb'; this.style.color='#536364';" onmouseout="this.style.background='none'; this.style.color='#A0AEC0';">×</button>
         </div>
         <div style="margin-bottom: 1.5rem;">
-            <div style="color: #718096; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            <div style="color: #778483; font-size: 0.9rem; margin-bottom: 0.5rem;">
                 ${presentation.venue} ${presentation.location ? `, ${presentation.location}` : ''}
             </div>
-            <div style="color: #718096; font-size: 0.9rem;">
+            <div style="color: #778483; font-size: 0.9rem;">
                 ${formatPresentationDate(presentation.date)}
             </div>
         </div>
-        <div style="background: #F7FAFC; border-radius: 12px; padding: 1.5rem; line-height: 1.7; color: #4A5568;">
+        <div style="background: #f5f2eb; border: 1px solid #e6e0d4; border-radius: 12px; padding: 1.5rem; line-height: 1.7; color: #536364;">
             ${presentation.abstract}
         </div>
     `;

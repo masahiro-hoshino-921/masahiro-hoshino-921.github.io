@@ -396,35 +396,35 @@ function openCitation(index) {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(12, 25, 41, 0.55);
+        background: rgba(16, 47, 51, 0.58);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1000;
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(5px);
         opacity: 0;
         transition: opacity 0.2s ease;
     `;
 
     const modalContent = document.createElement('div');
     modalContent.style.cssText = `
-        background: #ffffff;
-        border-radius: 3px;
+        background: #fffdfa;
+        border-radius: 16px;
         padding: 1.5rem;
         max-width: 900px;
         width: 92%;
         max-height: 80vh;
         overflow-y: auto;
-        box-shadow: 0 8px 32px rgba(12, 25, 41, 0.25);
+        box-shadow: 0 24px 64px rgba(16, 47, 51, 0.24);
         position: relative;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #d9d5cc;
         transform: translateY(8px);
         transition: transform 0.2s ease;
     `;
 
     modalContent.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid #0c1929;">
-            <h2 style="color: #0c1929; font-size: 1.1rem; margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; letter-spacing: -0.01em;">BibTeX</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #d9d5cc;">
+            <h2 style="color: #102f33; font-size: 1.4rem; margin: 0; font-family: 'Newsreader', 'Noto Serif JP', Georgia, serif; font-weight: 500; letter-spacing: -0.02em;">BibTeX</h2>
             <button id="closeModal" style="
                 background: none;
                 border: none;
@@ -441,40 +441,40 @@ function openCitation(index) {
                 line-height: 1;
             " onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#9ca3af'">×</button>
         </div>
-        <div style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 2px; padding: 1rem; margin-bottom: 1rem; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.78rem; line-height: 1.5; overflow-x: auto; color: #374151;">
+        <div style="background: #f5f2eb; border: 1px solid #d9d5cc; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; font-family: 'IBM Plex Mono', 'Courier New', monospace; font-size: 0.78rem; line-height: 1.5; overflow-x: auto; color: #536364;">
             <pre id="bibtexContent" style="margin: 0; white-space: pre-wrap;">${bibtex}</pre>
         </div>
         <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
             <button id="copyBtn" style="
-                background: #0c1929;
+                background: #102f33;
                 color: #ffffff;
                 border: none;
                 padding: 0.4rem 1rem;
-                border-radius: 2px;
+                border-radius: 999px;
                 cursor: pointer;
                 font-size: 0.75rem;
                 font-weight: 600;
-                font-family: 'Source Sans 3', sans-serif;
+                font-family: 'Manrope', 'Noto Sans JP', sans-serif;
                 transition: background 0.12s ease;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
-            " onmouseover="this.style.background='#1e5090'" onmouseout="this.style.background='#0c1929'">
+            " onmouseover="this.style.background='#2a5c61'" onmouseout="this.style.background='#102f33'">
                 Copy
             </button>
             <button id="downloadBtn" style="
                 background: transparent;
-                color: #4b5563;
-                border: 1px solid #d1d5db;
+                color: #536364;
+                border: 1px solid #d9d5cc;
                 padding: 0.4rem 1rem;
-                border-radius: 2px;
+                border-radius: 999px;
                 cursor: pointer;
                 font-size: 0.75rem;
                 font-weight: 600;
-                font-family: 'Source Sans 3', sans-serif;
+                font-family: 'Manrope', 'Noto Sans JP', sans-serif;
                 transition: all 0.12s ease;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
-            " onmouseover="this.style.borderColor='#1e5090';this.style.color='#1e5090'" onmouseout="this.style.borderColor='#d1d5db';this.style.color='#4b5563'">
+            " onmouseover="this.style.borderColor='#c75d3a';this.style.color='#a8492d'" onmouseout="this.style.borderColor='#d9d5cc';this.style.color='#536364'">
                 Download .bib
             </button>
         </div>
@@ -558,15 +558,15 @@ function showNotification(message) {
         position: fixed;
         top: 16px;
         right: 16px;
-        background: #0c1929;
+        background: #102f33;
         color: #ffffff;
         padding: 10px 16px;
-        border-radius: 2px;
-        box-shadow: 0 4px 16px rgba(12, 25, 41, 0.3);
+        border-radius: 10px;
+        box-shadow: 0 8px 28px rgba(16, 47, 51, 0.24);
         z-index: 1100;
         font-size: 0.8rem;
         font-weight: 500;
-        font-family: 'Source Sans 3', sans-serif;
+        font-family: 'Manrope', 'Noto Sans JP', sans-serif;
         letter-spacing: 0.02em;
         transform: translateY(-8px);
         opacity: 0;
