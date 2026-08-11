@@ -3,6 +3,20 @@
 // Presentations data
 const presentationsData = [
     {
+        type: "domesticconference",
+        title: "Efficient quantum simulation of random-coupling models by spectral amplification",
+        authors: "Masahiro Hoshino, Nazlı Uğur Köylüoğlu, Marcin Kalinowski, Yuto Ashida, Mikhail D. Lukin",
+        venue: "ムーンショット目標6 2026年度夏合宿",
+        location: "東京",
+        date: "2026-8-4",
+        format: "poster",
+        status: "completed",
+        abstract: "",
+        slides: "",
+        video: "",
+        poster: "slides/HKKAL2026_poster.pdf"
+    },
+    {
         type: "seminar",
         title: "Universal behaviors of quantum magic in many-body systems",
         authors: "Masahiro Hoshino, Ryota Matsuda, Masaki Oshikawa, Yuto Ashida",
