@@ -2,6 +2,20 @@
 
 // Presentations data
 const presentationsData = [
+        {
+        type: "domesticconference",
+        title: "Efficient quantum simulation of random-coupling models by spectral amplification",
+        authors: "Masahiro Hoshino, Nazlı Uğur Köylüoğlu, Marcin Kalinowski, Yuto Ashida, Mikhail D. Lukin",
+        venue: "QLEAP量子AI・ムーンショット合同研究会",
+        location: "大阪大学",
+        date: "2026-9-11",
+        format: "oral",
+        status: "completed",
+        abstract: "",
+        slides: "",
+        video: "",
+        poster: "slides/HKKAL2026_20min.pdf"
+    },
     {
         type: "domesticconference",
         title: "Efficient quantum simulation of random-coupling models by spectral amplification",
