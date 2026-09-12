@@ -12,9 +12,9 @@ const presentationsData = [
         format: "oral",
         status: "completed",
         abstract: "",
-        slides: "",
+        slides: "slides/HKKAL2026_20min.pdf",
         video: "",
-        poster: "slides/HKKAL2026_20min.pdf"
+        poster: ""
     },
     {
         type: "domesticconference",
