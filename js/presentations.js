@@ -4,10 +4,24 @@
 const presentationsData = [
         {
         type: "domesticconference",
+        title: "量子カオスと非ガウシアン性",
+        authors: "星野真宏, 松田諒太, 蘆田祐人",
+        venue: "日本物理学会第81回年次大会",
+        location: "東京大学駒場キャンパス",
+        date: "2026-9-17",
+        format: "oral",
+        status: "completed",
+        abstract: "",
+        slides: "slides/JPS2026A.pdf",
+        video: "",
+        poster: ""
+    },
+        {
+        type: "domesticconference",
         title: "Efficient quantum simulation of random-coupling models by spectral amplification",
         authors: "Masahiro Hoshino, Nazlı Uğur Köylüoğlu, Marcin Kalinowski, Yuto Ashida, Mikhail D. Lukin",
         venue: "QLEAP量子AI・ムーンショット合同研究会",
-        location: "大阪大学",
+        location: "大阪大学豊中キャンパス",
         date: "2026-9-11",
         format: "oral",
         status: "completed",
