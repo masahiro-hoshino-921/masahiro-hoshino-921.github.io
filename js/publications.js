@@ -2,6 +2,19 @@
 
 // Publications data in BibTeX format
 const publicationsDataBibTeX = [
+    `@unpublished{hoshino2026universal,
+  title = {Universal Bound and Phase Transition in Many-Body Fermionic Non-Gaussianity},
+  author = {Hoshino, Masahiro and Matsuda, Ryota and Ashida, Yuto},
+  year = 2026,
+  number = {arXiv:2610.02075},
+  eprint = {2610.02075},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2610.02075},
+  archiveprefix = {arXiv},
+  pdf = {https://arxiv.org/pdf/2610.02075}
+}
+`,
     `@unpublished{matsuda2026quantum,
     title = {Quantum Computational Resources and Conformal Field Theory: Unifying Spins, Bosons, and Fermions},
     author = {Matsuda, Ryota and Hoshino, Masahiro and Ashida, Yuto},
