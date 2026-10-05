@@ -5,7 +5,7 @@ const publicationsDataBibTeX = [
     `@unpublished{matsuda2026efficient,
       title={Efficient Sampling for Many-Body Fermionic Non-Gaussianity}, 
       author={Ryota Matsuda and Masahiro Hoshino and Yuto Ashida},
-      year={2026},
+      year=2026,
       number={arXiv:2610.03492},
       eprint={2610.03492},
       archivePrefix={arXiv},
