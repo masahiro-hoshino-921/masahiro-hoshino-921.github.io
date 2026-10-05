@@ -2,6 +2,17 @@
 
 // Publications data in BibTeX format
 const publicationsDataBibTeX = [
+    `@unpublished{matsuda2026efficient,
+      title={Efficient Sampling for Many-Body Fermionic Non-Gaussianity}, 
+      author={Ryota Matsuda and Masahiro Hoshino and Yuto Ashida},
+      year={2026},
+      number={arXiv:2610.03492},
+      eprint={2610.03492},
+      archivePrefix={arXiv},
+      primaryClass={quant-ph},
+      doi={10.48550/arXiv.2610.03492},
+      pdf={https://arxiv.org/pdf/2610.03492}, 
+}`,
     `@unpublished{hoshino2026universal,
   title = {Universal Bound and Phase Transition in Many-Body Fermionic Non-Gaussianity},
   author = {Hoshino, Masahiro and Matsuda, Ryota and Ashida, Yuto},
